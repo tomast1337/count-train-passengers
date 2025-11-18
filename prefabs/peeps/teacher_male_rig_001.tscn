@@ -177,10 +177,10 @@ bind/49/bone = -1
 bind/49/pose = Transform3D(-1, 0, 3.2584137e-07, 3.2584137e-07, 0, 1, 0, 1, 0, -0.84034956, -0.2631041, 0)
 
 [node name="TeacherMaleRig_001" type="Node3D"]
-transform = Transform3D(-6.2068597e-07, 0, 2.2, 0, 2.2, 0, -2.2, 0, -6.2068597e-07, 0, 0, 0)
+transform = Transform3D(-5.6425995e-07, 0, 2, 0, 2, 0, -2, 0, -5.6425995e-07, 0, 0, 0)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2740418, 0, -2.3841858e-07)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.006940361, 0, 1.1906869e-07)
 bones/0/name = "pelvis"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 4.4703476e-08, 1.1159753e-08, 0.96833885, -0.24963944, -4.3288118e-08, 0.24963945, 0.9683388, 3.434387e-08, 0.46143588, -0.02522155)

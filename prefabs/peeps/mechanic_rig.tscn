@@ -177,7 +177,7 @@ bind/49/bone = -1
 bind/49/pose = Transform3D(-1, 0, 3.2584137e-07, 3.2584137e-07, 0, 1, 0, 1, 0, -0.94036806, -0.59307253, 0)
 
 [node name="MechanicRig" type="Node3D"]
-transform = Transform3D(-6.2068597e-07, 0, 2.2, 0, 2.2, 0, -2.2, 0, -6.2068597e-07, 0, 0, 0)
+transform = Transform3D(-5.6425995e-07, 0, 2, 0, 2, 0, -2, 0, -5.6425995e-07, 0, 0, 0)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="."]
 bones/0/name = "pelvis"

@@ -1,18 +1,36 @@
-[gd_scene load_steps=109 format=4 uid="uid://hkwkqfgp8u6a"]
+[gd_scene load_steps=127 format=4 uid="uid://hkwkqfgp8u6a"]
 
 [ext_resource type="Material" uid="uid://d2jnlbo8v6wsb" path="res://models/Metro_PSX/Models/materials/metal_02.tres" id="1_lk84x"]
 [ext_resource type="Script" uid="uid://csggb51ml36p7" path="res://prefabs/subway_car.gd" id="1_ynsjx"]
+[ext_resource type="PackedScene" uid="uid://cpnkyitddtlil" path="res://prefabs/peeps/animation_player.tscn" id="2_pi2t3"]
 [ext_resource type="Material" uid="uid://bn2c8alp7mw0x" path="res://models/Metro_PSX/Models/materials/metal.tres" id="2_ynsjx"]
+[ext_resource type="PackedScene" uid="uid://bi5ncdyvkvyi1" path="res://prefabs/peeps/doc_male_rig.tscn" id="3_8aqst"]
 [ext_resource type="Material" uid="uid://b0nl1mtly61tu" path="res://models/Metro_PSX/Models/materials/metal_01.tres" id="3_8gs7n"]
+[ext_resource type="PackedScene" uid="uid://bl2apkwetkkie" path="res://prefabs/peeps/engineer_rig.tscn" id="4_6p7bf"]
 [ext_resource type="Material" uid="uid://d0ypprvncmepv" path="res://models/Metro_PSX/Models/materials/metal_03.tres" id="4_wusr4"]
 [ext_resource type="Material" uid="uid://bwrlvqvhvp4rn" path="res://models/Metro_PSX/Models/materials/Floor.tres" id="5_is6xx"]
+[ext_resource type="PackedScene" uid="uid://b1eydnvhqh8k2" path="res://prefabs/peeps/fireman_male_rig.tscn" id="5_nw343"]
 [ext_resource type="Material" uid="uid://db1sfa0rg0ovb" path="res://models/Metro_PSX/Models/materials/metal_04.tres" id="6_0lxa6"]
+[ext_resource type="PackedScene" uid="uid://dcb3twd7n8cph" path="res://prefabs/peeps/garbage_man_rig.tscn" id="6_4ind4"]
 [ext_resource type="Material" uid="uid://b07ygrlkq5s0t" path="res://models/Metro_PSX/Models/materials/Trains_01.tres" id="7_4g6hm"]
+[ext_resource type="PackedScene" uid="uid://bvl0fxn4p4s68" path="res://prefabs/peeps/mechanic_rig.tscn" id="7_bgf0p"]
+[ext_resource type="PackedScene" uid="uid://ci1rmxqf5mli0" path="res://prefabs/peeps/nurse_female_rig.tscn" id="8_njso7"]
 [ext_resource type="Material" uid="uid://rl33ejrr0gvd" path="res://models/Metro_PSX/Models/materials/Trains.tres" id="8_opvt4"]
 [ext_resource type="Material" uid="uid://c1jc5qqp60vq7" path="res://models/Metro_PSX/Models/materials/seats.tres" id="9_7n4c0"]
+[ext_resource type="PackedScene" uid="uid://tq8cgi67rhoo" path="res://prefabs/peeps/police_male_rig.tscn" id="9_7qqfg"]
+[ext_resource type="PackedScene" uid="uid://jmkedykjk7js" path="res://prefabs/peeps/scientist_female_rig_001.tscn" id="10_8hnur"]
 [ext_resource type="Material" uid="uid://c5it4f2m41l1b" path="res://models/Metro_PSX/Models/materials/metal_05.tres" id="10_vntwj"]
 [ext_resource type="Material" uid="uid://dca8yqy6ym1yt" path="res://models/Metro_PSX/Models/materials/Door.tres" id="11_0otdk"]
+[ext_resource type="PackedScene" uid="uid://cad0tnb2cu1rh" path="res://prefabs/peeps/scientist_female_rig_002.tscn" id="11_ax4ra"]
+[ext_resource type="PackedScene" uid="uid://oqr8e663uxan" path="res://prefabs/peeps/scientist_male_rig.tscn" id="12_luv64"]
 [ext_resource type="Material" uid="uid://brtwgj0qegd2b" path="res://models/Metro_PSX/Models/materials/Glass.tres" id="12_mjnec"]
+[ext_resource type="PackedScene" uid="uid://q3pa6ghy1w7i" path="res://prefabs/peeps/soldier_male_rig.tscn" id="13_0djh8"]
+[ext_resource type="PackedScene" uid="uid://lp8lo7g71eu4" path="res://prefabs/peeps/student_female_rig.tscn" id="14_utwdm"]
+[ext_resource type="PackedScene" uid="uid://bwmmoenypooug" path="res://prefabs/peeps/student_male_rig.tscn" id="15_x7f78"]
+[ext_resource type="PackedScene" uid="uid://cgmnmq5y0vkka" path="res://prefabs/peeps/teacher_female_rig.tscn" id="16_ixesg"]
+[ext_resource type="PackedScene" uid="uid://c7ugvjiuyk12r" path="res://prefabs/peeps/teacher_male_rig.tscn" id="17_qf1wn"]
+[ext_resource type="PackedScene" uid="uid://u1t0iwn6s7y4" path="res://prefabs/peeps/teacher_male_rig_001.tscn" id="18_2dfdr"]
+[ext_resource type="PackedScene" uid="uid://bupov58cgmqcn" path="res://prefabs/peeps/traffic_police_rig.tscn" id="19_jaojr"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_7gfop"]
 _surfaces = [{
@@ -2470,11 +2488,18 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_dyysm")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_lk84x"]
-size = Vector3(2, 0.038085938, 2017.3221)
+[sub_resource type="Curve3D" id="Curve3D_pi2t3"]
+bake_interval = 3.0
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.34986693, 0.09934342, 0.16873741, 0, 0, 0, 0, 0, 0, 1.661, 0.1, 0.431, 0, 0, 0, 0, 0, 0, 0.417, 0.1, -1.279, 0, 0, 0, 0, 0, 0, 1.555, 0.1, -2.738, 0, 0, 0, 0, 0, 0, 1.2363021, 0.100000024, -3.3508148, 0, 0, 0, 0, 0, 0, 0.799, 0.100000024, -4.4018626, 0, 0, 0, 0, 0, 0, -0.07488866, 0.100000024, -4.727, 0, 0, 0, 0, 0, 0, 1.6911774, 0.100000024, -6.282, 0, 0, 0, 0, 0, 0, 0.012148857, 0.11255443, -8.061245, 0, 0, 0, 0, 0, 0, 0.52, 0.1, -10.228, 0, 0, 0, 0, 0, 0, 1.149, 0.1, -8.881, 0, 0, 0, 0, 0, 0, 1.422, 0.1, -11.116, 0, 0, 0, 0, 0, 0, 0.601, 0.1, -13.015, 0, 0, 0, 0, 0, 0, 0.682, 0.1, -15.451, 0, 0, 0, 0, 0, 0, 1.509, 0.1, -16.463, 0, 0, 0, 0, 0, 0, 1.648, 0.1, -17.678, 0, 0, 0, 0, 0, 0, 0.984, 0.1, -18.254, 0, 0, 0, 0, 0, 0, 0.675, 0.1, -19.317, 0, 0, 0, 0, 0, 0, 1.09, 0.1, -20.642),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0.013122845, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 19
 
 [node name="SubwayCar" type="Node3D"]
 script = ExtResource("1_ynsjx")
+peepAnimation = ExtResource("2_pi2t3")
+peepModel = Array[PackedScene]([ExtResource("3_8aqst"), ExtResource("4_6p7bf"), ExtResource("5_nw343"), ExtResource("6_4ind4"), ExtResource("7_bgf0p"), ExtResource("8_njso7"), ExtResource("9_7qqfg"), ExtResource("10_8hnur"), ExtResource("11_ax4ra"), ExtResource("12_luv64"), ExtResource("13_0djh8"), ExtResource("14_utwdm"), ExtResource("15_x7f78"), ExtResource("16_ixesg"), ExtResource("17_qf1wn"), ExtResource("18_2dfdr"), ExtResource("19_jaojr")])
 
 [node name="Body" type="Node3D" parent="."]
 
@@ -2746,9 +2771,13 @@ light_specular = 0.0
 omni_range = 16.285
 omni_attenuation = 1.001
 
-[node name="SpawnAreaArea3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7448151, 0)
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.04736792, 0, 0.9988775, 0, 1, 0, -0.9988775, 0, 0.04736792, 14.337391, 2.9677858, 0.19537687)
 
-[node name="shape" type="CollisionShape3D" parent="SpawnAreaArea3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.61120605, -0.23779297, 997.5176)
-shape = SubResource("BoxShape3D_lk84x")
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15834618, 1.4629829, 9.969191)
+curve = SubResource("Curve3D_pi2t3")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-0.12932734, -0.00032105538, -0.9916012, -1.4551891e-11, 0.99999815, -0.00032377485, 0.9916003, -4.1872943e-05, -0.12932745, -0.34986693, 0.09934342, 0.16873741)
+loop = false
