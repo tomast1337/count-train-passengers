@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://g3y3mb63kih1"]
+
+[ext_resource type="Texture2D" uid="uid://cw7bjxc88ohrm" path="res://models/Metro_PSX/Models/textures/Metro_Tiles.png" id="1_nhch8"]
+
+[resource]
+resource_name = "Tiles"
+cull_mode = 2
+albedo_texture = ExtResource("1_nhch8")
+texture_filter = 2

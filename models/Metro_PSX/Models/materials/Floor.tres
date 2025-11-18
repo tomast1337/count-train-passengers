@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bwrlvqvhvp4rn"]
+
+[ext_resource type="Texture2D" uid="uid://bvg8vril88fnf" path="res://models/Metro_PSX/Models/textures/Metro_Floor.png" id="1_4rvna"]
+
+[resource]
+resource_name = "Floor"
+cull_mode = 2
+albedo_texture = ExtResource("1_4rvna")
+texture_filter = 0

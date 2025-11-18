@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bvhk80tqysl17"]
+
+[ext_resource type="Texture2D" uid="uid://bb34ioco2wglk" path="res://models/Metro_PSX/Models/textures/Metro_ConcreteBare.png" id="1_07alm"]
+
+[resource]
+resource_name = "ConcreteBare"
+cull_mode = 2
+albedo_texture = ExtResource("1_07alm")
+texture_filter = 0

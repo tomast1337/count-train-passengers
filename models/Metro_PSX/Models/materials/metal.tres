@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bn2c8alp7mw0x"]
+
+[ext_resource type="Texture2D" uid="uid://08uohrrv5v8u" path="res://models/Metro_PSX/Models/textures/Metro_metal.jpg" id="1_duttw"]
+
+[resource]
+resource_name = "metal"
+cull_mode = 2
+albedo_texture = ExtResource("1_duttw")
+metallic = 0.35
+metallic_specular = 1.0
+texture_filter = 0

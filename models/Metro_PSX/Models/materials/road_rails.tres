@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://6giup5dpgems"]
+
+[ext_resource type="Texture2D" uid="uid://pfvgisaibd2n" path="res://models/Metro_PSX/Models/textures/Metro_road_rails.jpg" id="1_c5a84"]
+
+[resource]
+resource_name = "road_rails"
+cull_mode = 2
+albedo_texture = ExtResource("1_c5a84")
+texture_filter = 2

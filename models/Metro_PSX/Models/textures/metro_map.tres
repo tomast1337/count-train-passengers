@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dv5wbcbqjuhdw"]
+
+[ext_resource type="Texture2D" uid="uid://bncds1sglh4ty" path="res://models/Metro_PSX/Models/textures/Metro_metro_map.png" id="1_1oixo"]
+
+[resource]
+resource_name = "metro_map"
+cull_mode = 2
+albedo_texture = ExtResource("1_1oixo")
+texture_filter = 2

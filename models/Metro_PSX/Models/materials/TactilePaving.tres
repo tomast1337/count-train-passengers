@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c5adjf13mspel"]
+
+[ext_resource type="Texture2D" uid="uid://b0qnsshe7v5t3" path="res://models/Metro_PSX/Models/textures/Metro_TactilePaving.png" id="1_y0uyu"]
+
+[resource]
+resource_name = "TactilePaving"
+cull_mode = 2
+albedo_texture = ExtResource("1_y0uyu")
+texture_filter = 2

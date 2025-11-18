@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://b0887alyqm7dj"]
+
+[ext_resource type="Texture2D" uid="uid://dlrdtcmmhfhiu" path="res://models/Metro_PSX/Models/textures/Metro_light.png" id="1_ewino"]
+[ext_resource type="Texture2D" uid="uid://dt12pfyym2n1o" path="res://models/Metro_PSX/Models/textures/Metro_light_Emissor.png" id="2_t72gc"]
+
+[resource]
+resource_name = "light"
+cull_mode = 2
+albedo_texture = ExtResource("1_ewino")
+emission_enabled = true
+emission_energy_multiplier = 7.3999996
+emission_texture = ExtResource("2_t72gc")
+texture_filter = 2

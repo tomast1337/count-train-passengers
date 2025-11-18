@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bi7sax3llfmii"]
+
+[ext_resource type="Texture2D" uid="uid://ch8k1tx5tjeir" path="res://models/Metro_PSX/Models/textures/Metro_ticket_machine.png" id="1_mspyv"]
+
+[resource]
+resource_name = "ticket_machine"
+cull_mode = 2
+albedo_texture = ExtResource("1_mspyv")
+texture_filter = 2

@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cnpcqqi0ws5y3"]
+
+[ext_resource type="Texture2D" uid="uid://dbis7i6ppweum" path="res://models/Metro_PSX/Models/textures/Metro_Chair.png" id="1_fc5kn"]
+
+[resource]
+resource_name = "Chair"
+cull_mode = 2
+albedo_texture = ExtResource("1_fc5kn")
+texture_filter = 0

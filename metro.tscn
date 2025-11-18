@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://u5asd80unmyl"]
+
+[ext_resource type="PackedScene" uid="uid://db0b3c2laib43" path="res://models/Metro_PSX/Models/Metro.fbx" id="1_73d30"]
+
+[node name="Metro" instance=ExtResource("1_73d30")]
