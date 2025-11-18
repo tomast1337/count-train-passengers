@@ -2488,13 +2488,19 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_dyysm")
 
-[sub_resource type="Curve3D" id="Curve3D_pi2t3"]
-bake_interval = 3.0
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.34986693, 0.09934342, 0.16873741, 0, 0, 0, 0, 0, 0, 1.661, 0.1, 0.431, 0, 0, 0, 0, 0, 0, 0.417, 0.1, -1.279, 0, 0, 0, 0, 0, 0, 1.555, 0.1, -2.738, 0, 0, 0, 0, 0, 0, 1.2363021, 0.100000024, -3.3508148, 0, 0, 0, 0, 0, 0, 0.799, 0.100000024, -4.4018626, 0, 0, 0, 0, 0, 0, -0.07488866, 0.100000024, -4.727, 0, 0, 0, 0, 0, 0, 1.6911774, 0.100000024, -6.282, 0, 0, 0, 0, 0, 0, 0.012148857, 0.11255443, -8.061245, 0, 0, 0, 0, 0, 0, 0.52, 0.1, -10.228, 0, 0, 0, 0, 0, 0, 1.149, 0.1, -8.881, 0, 0, 0, 0, 0, 0, 1.422, 0.1, -11.116, 0, 0, 0, 0, 0, 0, 0.601, 0.1, -13.015, 0, 0, 0, 0, 0, 0, 0.682, 0.1, -15.451, 0, 0, 0, 0, 0, 0, 1.509, 0.1, -16.463, 0, 0, 0, 0, 0, 0, 1.648, 0.1, -17.678, 0, 0, 0, 0, 0, 0, 0.984, 0.1, -18.254, 0, 0, 0, 0, 0, 0, 0.675, 0.1, -19.317, 0, 0, 0, 0, 0, 0, 1.09, 0.1, -20.642),
-"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0.013122845, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-}
-point_count = 19
+[sub_resource type="GDScript" id="GDScript_pi2t3"]
+script/source = "extends Node3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+    pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+    pass
+"
 
 [node name="SubwayCar" type="Node3D"]
 script = ExtResource("1_ynsjx")
@@ -2771,13 +2777,93 @@ light_specular = 0.0
 omni_range = 16.285
 omni_attenuation = 1.001
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.04736792, 0, 0.9988775, 0, 1, 0, -0.9988775, 0, 0.04736792, 14.337391, 2.9677858, 0.19537687)
+[node name="Spawnpoints" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4882565, 0)
 
-[node name="Path3D" type="Path3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15834618, 1.4629829, 9.969191)
-curve = SubResource("Curve3D_pi2t3")
+[node name="1" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2093288, 0, 9.25279)
+script = SubResource("GDScript_pi2t3")
 
-[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(-0.12932734, -0.00032105538, -0.9916012, -1.4551891e-11, 0.99999815, -0.00032377485, 0.9916003, -4.1872943e-05, -0.12932745, -0.34986693, 0.09934342, 0.16873741)
-loop = false
+[node name="2" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51504004, 0, 8.734741)
+script = SubResource("GDScript_pi2t3")
+
+[node name="3" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1770974, 0, 7.1388683)
+script = SubResource("GDScript_pi2t3")
+
+[node name="4" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1770974, 0, 6.4468155)
+script = SubResource("GDScript_pi2t3")
+
+[node name="5" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57760453, 0, 4.5040355)
+script = SubResource("GDScript_pi2t3")
+
+[node name="6" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017727137, 0, 4.1030116)
+script = SubResource("GDScript_pi2t3")
+
+[node name="7" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85003996, 0, 3.8083277)
+script = SubResource("GDScript_pi2t3")
+
+[node name="8" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07801139, 0, 2.6730757)
+script = SubResource("GDScript_pi2t3")
+
+[node name="9" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9638928, 0, 1.5716891)
+script = SubResource("GDScript_pi2t3")
+
+[node name="10" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.49833643, 0, 1.3588996)
+script = SubResource("GDScript_pi2t3")
+
+[node name="11" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2155704, 0, 0.16943657)
+script = SubResource("GDScript_pi2t3")
+
+[node name="12" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1284608, 0, -0.73469675)
+script = SubResource("GDScript_pi2t3")
+
+[node name="13" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31185687, 0, -2.0593753)
+script = SubResource("GDScript_pi2t3")
+
+[node name="14" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.98951006, 0, -3.0118423)
+script = SubResource("GDScript_pi2t3")
+
+[node name="15" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.467551, 0, -2.7029247)
+script = SubResource("GDScript_pi2t3")
+
+[node name="16" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.036881924, 0, -4.1251683)
+script = SubResource("GDScript_pi2t3")
+
+[node name="17" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.95498365, 2.3841858e-07, -5.119004)
+script = SubResource("GDScript_pi2t3")
+
+[node name="18" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4946244, 2.3841858e-07, -6.913068)
+script = SubResource("GDScript_pi2t3")
+
+[node name="19" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8058448, 2.3841858e-07, -8.36396)
+script = SubResource("GDScript_pi2t3")
+
+[node name="21" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29850566, 2.3841858e-07, -9.7911415)
+script = SubResource("GDScript_pi2t3")
+
+[node name="22" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35966468, 2.3841858e-07, -8.662541)
+script = SubResource("GDScript_pi2t3")
+
+[node name="20" type="Node3D" parent="Spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4207618, 2.3841858e-07, -7.744075)
+script = SubResource("GDScript_pi2t3")

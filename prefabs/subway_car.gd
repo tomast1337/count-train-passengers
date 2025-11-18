@@ -2,43 +2,37 @@ extends Node3D
 
 @export var peepAnimation: PackedScene;
 @export var peepModel: Array[PackedScene] = [];
-@export var max_peeps: int = 15;
-@export var min_peeps: int = 2;
+@export var speed: float = 5.0;  # Speed in units per second along z-axis
 
 var peeps: Array[Node3D] = [];
-var peep_count: int = 0;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-    peep_count = randi() % (max_peeps - min_peeps) + min_peeps;
     # Defer spawning to ensure all nodes are in the tree
     call_deferred("_spawn_peeps")
 
 
 func _spawn_peeps() -> void:
-    # Get the Path3D node
-    var path_3d = get_node_or_null("Path3D")
-    if not path_3d:
-        push_error("Path3D not found!")
+    # Get the Spawnpoints node
+    var spawnpoints = get_node_or_null("Spawnpoints")
+    if not spawnpoints:
+        push_error("Spawnpoints node not found!")
         return
     
-    # Get the curve from Path3D
-    var curve = path_3d.curve
-    if not curve:
-        push_error("Path3D has no curve!")
+    # Get all child nodes (spawn points)
+    var spawn_point_children = spawnpoints.get_children()
+    if spawn_point_children.is_empty():
+        push_warning("Spawnpoints has no children!")
         return
     
-    var curve_length = curve.get_baked_length()
-    if curve_length <= 0:
-        push_error("Path3D curve has no length!")
+    if peepModel.is_empty():
+        push_warning("No peep models assigned!")
         return
     
-    # Spawn peeps
-    for i in range(peep_count):
-        if peepModel.is_empty():
-            push_warning("No peep models assigned!")
-            break
-        
+    # Spawn a peep at each spawn point
+    for spawn_point in spawn_point_children:
+        if randf() > 0.5:
+            continue
         # Pick a random peep model
         var random_model = peepModel[randi() % peepModel.size()]
         if not random_model:
@@ -49,20 +43,15 @@ func _spawn_peeps() -> void:
         if not peep_instance:
             continue
         
-        # Calculate random position along the path
-        var random_offset = randf() * curve_length
-        var random_position = curve.sample_baked(random_offset)
-        
-        # Transform to world space using Path3D's global transform
-        var path_transform = path_3d.global_transform
-        var world_position = path_transform * random_position
+        # Get spawn point's world position
+        var spawn_position = spawn_point.global_position
         
         # Add to scene first
         add_child(peep_instance)
         peeps.append(peep_instance)
         
         # Set position after adding to tree
-        peep_instance.global_position = world_position
+        peep_instance.global_position = spawn_position
         
         # Add animation player and play idle animation
         if peepAnimation:
@@ -81,11 +70,17 @@ func _spawn_peeps() -> void:
                     if anim_player:
                         peep_instance.add_child(anim_player_instance)
             
-            # Play idle animation if available
+            # Play idle animation if available (with looping)
             if anim_player and anim_player.has_animation("idle"):
+                # Set loop mode to loop
+                var anim = anim_player.get_animation("idle")
+                if anim:
+                    anim.loop_mode = Animation.LOOP_LINEAR
+                # Play the animation - it will loop automatically
                 anim_player.play("idle")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-    pass
+func _process(delta: float) -> void:
+    # Move the subway car along the z-axis at constant speed
+    position.z -= speed * delta
