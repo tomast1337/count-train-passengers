@@ -1,0 +1,33 @@
+[gd_resource type="Environment" load_steps=5 format=3 uid="uid://drmedi0owbsrq"]
+
+[sub_resource type="Curve" id="Curve_xu5c5"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.55647385, 0.51670253), -1.0786637, -1.0786637, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_qqsaq"]
+_data = [Vector2(0, 0), 0.0, 1.2957296, 0, 0, Vector2(0.523416, 0.44665945), 1.2386854, 1.2386854, 0, 0, Vector2(1, 1), 1.2497357, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_t0sg7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.39669424, 0.36260772), 0.49210927, 0.49210927, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_4ywg7"]
+curve_x = SubResource("Curve_xu5c5")
+curve_y = SubResource("Curve_qqsaq")
+curve_z = SubResource("Curve_t0sg7")
+
+[resource]
+glow_enabled = true
+glow_intensity = 0.69
+glow_bloom = 0.06
+glow_hdr_threshold = 2.63
+glow_hdr_scale = 1.79
+glow_hdr_luminance_cap = 15.6
+fog_enabled = true
+fog_light_color = Color(0.5176471, 0.5529412, 0.60784316, 1)
+fog_light_energy = 0.5
+adjustment_enabled = true
+adjustment_contrast = 1.28
+adjustment_saturation = 1.74
+adjustment_color_correction = SubResource("CurveXYZTexture_4ywg7")

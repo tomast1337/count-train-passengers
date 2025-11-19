@@ -41,6 +41,9 @@ func _ready() -> void:
     _update_counter_label(player1CounterLabel, player1Counter)
     _update_counter_label(player2CounterLabel, player2Counter)
 
+    countDownAudioStreamPlayer3D.stream = audios[str(timerDuration)]
+    countDownAudioStreamPlayer3D.play()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
     # get player1_up player2_up player1_down player2_down input events
@@ -85,8 +88,20 @@ func _update_counter_label(label: Label, value: int) -> void:
 @export var timerDuration: int = 4;
 var currentTimerDuration: int = timerDuration;
 
+@onready var countDownAudioStreamPlayer3D: AudioStreamPlayer3D = $CountDownAudioStreamPlayer3D
+
+var audios = {
+    "0": preload("res://sound/4.mp3"),
+    "1": preload("res://sound/4.mp3"),
+    "2": preload("res://sound/3.mp3"),
+    "3": preload("res://sound/2.mp3"),
+    "4": preload("res://sound/1.mp3"),
+}
+
 func _on_start_timer_timeout() -> void:
     currentTimerDuration -= 1;
+    countDownAudioStreamPlayer3D.stream = audios[str(currentTimerDuration)]
+    countDownAudioStreamPlayer3D.play()
     print("Current timer duration: %d" % currentTimerDuration);
     if currentTimerDuration <= 0:
         # set the length of the subway cars

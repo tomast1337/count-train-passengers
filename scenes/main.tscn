@@ -1,12 +1,14 @@
-[gd_scene load_steps=42 format=4 uid="uid://copuhe4v5l65q"]
+[gd_scene load_steps=43 format=4 uid="uid://copuhe4v5l65q"]
 
 [ext_resource type="PackedScene" uid="uid://hkwkqfgp8u6a" path="res://prefabs/subway_car.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://c6p3cfghbu61i" path="res://scripts/main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://8ljla1k8fe37" path="res://scenes/hud.tscn" id="3_h2yge"]
 [ext_resource type="AudioStream" uid="uid://cc64xnnwcaww" path="res://sound/mouse-click-lol.mp3" id="3_jbj1t"]
 [ext_resource type="AudioStream" uid="uid://buxefla8j70yf" path="res://sound/metro-is-waiting-57273.mp3" id="3_lquwl"]
+[ext_resource type="AudioStream" uid="uid://iqdoorblksd4" path="res://sound/1.mp3" id="3_muem4"]
 [ext_resource type="Material" uid="uid://g3y3mb63kih1" path="res://models/Metro_PSX/Models/materials/Tiles.tres" id="6_jkv2x"]
 [ext_resource type="Material" uid="uid://c5adjf13mspel" path="res://models/Metro_PSX/Models/materials/TactilePaving.tres" id="7_jbj1t"]
+[ext_resource type="Environment" uid="uid://drmedi0owbsrq" path="res://scenes/main_env.tres" id="8_dp3eg"]
 [ext_resource type="Material" uid="uid://6giup5dpgems" path="res://models/Metro_PSX/Models/materials/road_rails.tres" id="8_muem4"]
 [ext_resource type="Material" uid="uid://b7mnvf7adgujm" path="res://models/Metro_PSX/Models/materials/tile_tile.tres" id="9_dp3eg"]
 [ext_resource type="Material" uid="uid://d2jnlbo8v6wsb" path="res://models/Metro_PSX/Models/materials/metal_02.tres" id="10_0ld40"]
@@ -16,8 +18,6 @@
 [ext_resource type="PackedScene" uid="uid://cjg6flwpx2uer" path="res://prefabs/station_piece.tscn" id="13_ycdy4"]
 [ext_resource type="Material" uid="uid://b3sk8vqi8d7ac" path="res://models/Metro_PSX/Models/materials/Door_01.tres" id="14_pm3ni"]
 [ext_resource type="Material" uid="uid://brtwgj0qegd2b" path="res://models/Metro_PSX/Models/materials/Glass.tres" id="15_y6deb"]
-
-[sub_resource type="Environment" id="Environment_1bvp3"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_lquwl"]
 
@@ -622,6 +622,10 @@ fov = 45.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 3, 0)
 current = true
 
+[node name="CountDownAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.517087, 4.8913126, -0.35721767)
+stream = ExtResource("3_muem4")
+
 [node name="Player1ClickSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.891981, 3.3005908, -2)
 stream = ExtResource("3_jbj1t")
@@ -655,7 +659,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.512209, 0, 12.496321)
 [node name="Control" parent="." instance=ExtResource("3_h2yge")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_1bvp3")
+environment = ExtResource("8_dp3eg")
 camera_attributes = SubResource("CameraAttributesPractical_lquwl")
 compositor = SubResource("Compositor_7mycd")
 

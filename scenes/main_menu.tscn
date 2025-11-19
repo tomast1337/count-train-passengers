@@ -5,12 +5,14 @@
 [ext_resource type="AudioStream" uid="uid://buxefla8j70yf" path="res://sound/metro-is-waiting-57273.mp3" id="3_qe12f"]
 [ext_resource type="PackedScene" uid="uid://cjg6flwpx2uer" path="res://prefabs/station_piece.tscn" id="4_8qtwp"]
 [ext_resource type="PackedScene" uid="uid://c4wsi1yifsslr" path="res://scenes/main_menu_hud.tscn" id="5_glbon"]
+[ext_resource type="Environment" uid="uid://drmedi0owbsrq" path="res://scenes/main_env.tres" id="5_rtw2f"]
 
-[sub_resource type="Environment" id="Environment_1bvp3"]
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_rtw2f"]
+dof_blur_near_distance = 1.36
+dof_blur_near_transition = 2134.59
+dof_blur_amount = 1.0
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_lquwl"]
-
-[sub_resource type="Compositor" id="Compositor_7mycd"]
+[sub_resource type="Compositor" id="Compositor_oa1go"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_fu7sn")
@@ -49,9 +51,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.512209, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.512209, 0, 12.496321)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_1bvp3")
-camera_attributes = SubResource("CameraAttributesPractical_lquwl")
-compositor = SubResource("Compositor_7mycd")
+environment = ExtResource("5_rtw2f")
+camera_attributes = SubResource("CameraAttributesPractical_rtw2f")
+compositor = SubResource("Compositor_oa1go")
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 5.0
