@@ -18,6 +18,7 @@ var subwayCars: Array[Node3D] = [];
 @onready var player2ClickSound: AudioStreamPlayer3D = $Player2ClickSound
 
 @onready var startTimer: Timer = $StartTimer
+@onready var gameOverTimer: Timer = $GameOverTimer
 
 @export var player1Counter: int = 0;
 @export var player2Counter: int = 0;
@@ -56,13 +57,16 @@ func _process(_delta: float) -> void:
 
     if player1_up:
         _adjust_counter_for_player(1, 1)
+        gameOverTimer.reset()
     if player1_down:
         _adjust_counter_for_player(1, -1)
+        gameOverTimer.reset()
     if player2_up:
         _adjust_counter_for_player(2, 1)
+        gameOverTimer.reset()
     if player2_down:
         _adjust_counter_for_player(2, -1)
-
+        gameOverTimer.reset()
 
 func _adjust_counter_for_player(player: int, delta: int) -> void:
     if delta == 0:

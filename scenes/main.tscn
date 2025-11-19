@@ -613,6 +613,9 @@ subwayCar = ExtResource("1_0xm2m")
 one_shot = true
 autostart = true
 
+[node name="GameOverTimer" type="Timer" parent="."]
+wait_time = 5.0
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1.1924881e-08, 0, 1, 0, 1, 0, -1, 0, 1.1924881e-08, 11.21424, 3.5055013, 0)
 current = true
