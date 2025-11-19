@@ -1,10 +1,25 @@
 extends Control
 
+const SCORE_TEMPLATE: String = """[b]Round Result:[/b]
+Player 1 Guess: {Player1Guess}
+Player 2 Guess: {Player2Guess}
+
+[b]Correct Answer:[/b] 
+{CorrectAnswer}
+
+--------------------------------
+
+[b]Game Score:[/b]
+Player 1: {Player1Score} Rounds Won
+Player 2: {Player2Score} Rounds Won
+"""
+
 @export var player1Counter: int = 0;
 @export var player2Counter: int = 0;
 
 @onready var player1CounterLabel: Label = $Player1/Player1Counter
 @onready var player2CounterLabel: Label = $Player2/Player2Counter
+@onready var scoreLabel: Label = $ScoreBoard/ScoreLabel
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,3 +46,22 @@ func show_counter_labels() -> void:
         player1Control.visible = true
     if player2Control:
         player2Control.visible = true
+
+func hide_score_label() -> void:
+    var scoreBoard: Control = $ScoreBoard
+    if scoreBoard:
+        scoreBoard.visible = false
+
+func show_score_label() -> void:
+    var scoreBoard: Control = $ScoreBoard
+    if scoreBoard:
+        scoreBoard.visible = true
+
+func update_score_label(player1Guess: int, player2Guess: int, correctAnswer: int, player1Score: int, player2Score: int) -> void:
+    scoreLabel.text = SCORE_TEMPLATE.format({
+        "Player1Guess": player1Guess,
+        "Player2Guess": player2Guess,
+        "CorrectAnswer": correctAnswer,
+        "Player1Score": player1Score,
+        "Player2Score": player2Score,
+    })

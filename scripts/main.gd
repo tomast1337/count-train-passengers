@@ -30,6 +30,9 @@ var subwayCars: Array[Node3D] = [];
 var currentTrainCars: Array[Node3D] = [];  # Track cars of the current train
 var hasEmittedSignalForCurrentTrain: bool = false;  # Prevent multiple emissions
 
+var player1Score: int = 0;
+var player2Score: int = 0;
+var correctAnswer: int = 0;
 
 signal counter_changed(player: int, counter: int);
 signal last_wagon_crossed_line();
