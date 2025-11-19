@@ -1,4 +1,4 @@
-[gd_scene load_steps=127 format=4 uid="uid://hkwkqfgp8u6a"]
+[gd_scene load_steps=128 format=4 uid="uid://hkwkqfgp8u6a"]
 
 [ext_resource type="Material" uid="uid://d2jnlbo8v6wsb" path="res://models/Metro_PSX/Models/materials/metal_02.tres" id="1_lk84x"]
 [ext_resource type="Script" uid="uid://csggb51ml36p7" path="res://prefabs/subway_car.gd" id="1_ynsjx"]
@@ -31,6 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://c7ugvjiuyk12r" path="res://prefabs/peeps/teacher_male_rig.tscn" id="17_qf1wn"]
 [ext_resource type="PackedScene" uid="uid://u1t0iwn6s7y4" path="res://prefabs/peeps/teacher_male_rig_001.tscn" id="18_2dfdr"]
 [ext_resource type="PackedScene" uid="uid://bupov58cgmqcn" path="res://prefabs/peeps/traffic_police_rig.tscn" id="19_jaojr"]
+[ext_resource type="AudioStream" uid="uid://dviejen7dsnur" path="res://sound/train_loop.mp3" id="20_8aqst"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_7gfop"]
 _surfaces = [{
@@ -2507,6 +2508,15 @@ script = ExtResource("1_ynsjx")
 peepAnimation = ExtResource("2_pi2t3")
 peepModel = Array[PackedScene]([ExtResource("3_8aqst"), ExtResource("4_6p7bf"), ExtResource("5_nw343"), ExtResource("6_4ind4"), ExtResource("7_bgf0p"), ExtResource("8_njso7"), ExtResource("9_7qqfg"), ExtResource("10_8hnur"), ExtResource("11_ax4ra"), ExtResource("12_luv64"), ExtResource("13_0djh8"), ExtResource("14_utwdm"), ExtResource("15_x7f78"), ExtResource("16_ixesg"), ExtResource("17_qf1wn"), ExtResource("18_2dfdr"), ExtResource("19_jaojr")])
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43185806, 2.4761584, 0)
+stream = ExtResource("20_8aqst")
+volume_db = 9.0
+max_db = 6.0
+max_distance = 25.0
+doppler_tracking = 1
+parameters/looping = true
+
 [node name="Body" type="Node3D" parent="."]
 
 [node name="subway_car" type="MeshInstance3D" parent="Body"]
@@ -2867,3 +2877,5 @@ script = SubResource("GDScript_pi2t3")
 [node name="20" type="Node3D" parent="Spawnpoints"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4207618, 2.3841858e-07, -7.744075)
 script = SubResource("GDScript_pi2t3")
+
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]

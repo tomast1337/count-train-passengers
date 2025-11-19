@@ -4,12 +4,36 @@ extends Node3D
 @export var peepModel: Array[PackedScene] = [];
 @export var speed: float = 5.0;  # Speed in units per second along z-axis
 
+@onready var audioStreamPlayer3D: AudioStreamPlayer3D = $AudioStreamPlayer3D
+
 var peeps: Array[Node3D] = [];
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
     # Defer spawning to ensure all nodes are in the tree
     call_deferred("_spawn_peeps")
+
+    # set up audio stream player 3D
+    if audioStreamPlayer3D:
+        audioStreamPlayer3D.play()
+        const minSubwayCarSpeed: float = 2.0;
+        const maxSubwayCarSpeed: float = 16.0;
+        audioStreamPlayer3D.unit_size = minSubwayCarSpeed * maxSubwayCarSpeed;
+
+        # scale the pitch of the audio stream player 3D based on the speed of the subway car
+        # Normalize speed to 0-1 range
+        var normalized_speed = (speed - minSubwayCarSpeed) / (maxSubwayCarSpeed - minSubwayCarSpeed)
+        normalized_speed = clamp(normalized_speed, 0.0, 1.0)
+        
+        # Apply square root curve for more natural pitch scaling (ease-out)
+        var curved_speed = sqrt(normalized_speed)
+        
+        # Map to pitch range (0.7 = slower/lower pitch, 1.5 = faster/higher pitch)
+        const min_pitch: float = 0.7
+        const max_pitch: float = 1.5
+        audioStreamPlayer3D.pitch_scale = lerp(min_pitch, max_pitch, curved_speed)
+
+
 
 
 func _spawn_peeps() -> void:
@@ -88,3 +112,9 @@ func _spawn_peeps() -> void:
 func _process(delta: float) -> void:
     # Move the subway car along the z-axis at constant speed
     position.z -= speed * delta
+
+
+func _on_tree_exiting() -> void:
+    if audioStreamPlayer3D:
+        audioStreamPlayer3D.stop()
+        audioStreamPlayer3D.queue_free()
