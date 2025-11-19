@@ -29,6 +29,7 @@ var subwayCars: Array[Node3D] = [];
 
 var currentTrainCars: Array[Node3D] = [];  # Track cars of the current train
 var hasEmittedSignalForCurrentTrain: bool = false;  # Prevent multiple emissions
+var reparentedPeeps: Array[Node3D] = [];  # Track peeps that were reparented to main scene
 
 var player1Score: int = 0;
 var player2Score: int = 0;
@@ -63,6 +64,11 @@ func _ready() -> void:
     countDownAudioStreamPlayer3D.stream = audios[str(timerDuration)]
     countDownAudioStreamPlayer3D.play()
 
+    # Connect animation finished signal
+    if mainCameraAnimationPlayer:
+        if not mainCameraAnimationPlayer.animation_finished.is_connected(_on_animation_player_animation_finished):
+            mainCameraAnimationPlayer.animation_finished.connect(_on_animation_player_animation_finished)
+    
     #play reset camera animation
     if  mainCameraAnimationPlayer.has_animation("RESET"):
         mainCameraAnimationPlayer.play("RESET")
@@ -200,6 +206,7 @@ func _on_game_over_timer_timeout() -> void:
                                 old_parent.remove_child(peep)
                             add_child(peep)
                             all_peeps.append(peep)
+                            reparentedPeeps.append(peep)  # Track for cleanup
         
         # Distribute peeps evenly along the path
         if not all_peeps.is_empty() and endGamePeepsDisplayPath:
@@ -341,3 +348,52 @@ func _on_last_wagon_crossed_line() -> void:
     print("Player 2 guess: %d, score: %d" % [player2Counter, player2Score])
     
     gameOverTimer.start()
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+    if anim_name == "end_game":
+        _start_new_round()
+
+func _start_new_round() -> void:
+    # Delete all subway cars
+    for car in subwayCars:
+        if is_instance_valid(car):
+            car.queue_free()
+    subwayCars.clear()
+    currentTrainCars.clear()
+    
+    # Delete all peeps that were reparented to main scene
+    for peep in reparentedPeeps:
+        if is_instance_valid(peep):
+            peep.queue_free()
+    reparentedPeeps.clear()
+    
+    # Reset game state
+    player1Counter = 0
+    player2Counter = 0
+    currentTimerDuration = timerDuration
+    hasEmittedSignalForCurrentTrain = false
+    correctAnswer = 0
+    player1Score = 0
+    player2Score = 0
+    
+    # Stop game over timer
+    if not gameOverTimer.is_stopped():
+        gameOverTimer.stop()
+    
+    # Update HUD
+    _update_counter_label(player1CounterLabel, player1Counter)
+    _update_counter_label(player2CounterLabel, player2Counter)
+    hud.show_counter_labels()
+    hud.hide_score_label()
+    
+    # Play RESET camera animation
+    if mainCameraAnimationPlayer.has_animation("RESET"):
+        mainCameraAnimationPlayer.play("RESET")
+    else:
+        push_error("RESET animation not found")
+    
+    # Start countdown timer
+    countDownAudioStreamPlayer3D.stream = audios[str(timerDuration)]
+    countDownAudioStreamPlayer3D.play()
+    startTimer.start()
