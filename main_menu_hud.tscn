@@ -1,0 +1,170 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4wsi1yifsslr"]
+
+[ext_resource type="Script" uid="uid://1s7onpj8fxsa" path="res://main_menu_hud.gd" id="1_lj1x3"]
+[ext_resource type="FontFile" uid="uid://r87dka3mbmna" path="res://fonts/Jacquard24-Regular.ttf" id="2_q1o4g"]
+
+[node name="MainMenuHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_lj1x3")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 448.0
+offset_bottom = 384.0
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 347.0
+offset_bottom = 81.0
+theme_override_fonts/font = ExtResource("2_q1o4g")
+theme_override_font_sizes/font_size = 64
+text = "Metro Counter"
+
+[node name="StartButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -32.0
+offset_right = 168.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "Starts a new game with the defined options"
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_q1o4g")
+theme_override_font_sizes/font_size = 48
+text = "Start New Game"
+
+[node name="QuitButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = 56.0
+offset_right = 168.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "Quits the game"
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_q1o4g")
+theme_override_font_sizes/font_size = 48
+text = "Quit Game"
+
+[node name="PanelOptions" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 64.0
+offset_right = 768.0
+offset_bottom = 384.0
+
+[node name="Label" type="Label" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 161.57341
+offset_right = 111.0
+offset_bottom = 186.57341
+theme_override_font_sizes/font_size = 24
+text = "Train Speed"
+
+[node name="Min" type="Label" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 48.0
+offset_right = 64.0
+offset_bottom = 73.0
+theme_override_font_sizes/font_size = 24
+text = "Min"
+
+[node name="Max" type="Label" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 88.0
+offset_right = 64.0
+offset_bottom = 113.0
+theme_override_font_sizes/font_size = 24
+text = "Max"
+
+[node name="Min2" type="Label" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 193.57341
+offset_right = 64.0
+offset_bottom = 218.57341
+theme_override_font_sizes/font_size = 24
+text = "Min"
+
+[node name="Max2" type="Label" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 233.57341
+offset_right = 64.0
+offset_bottom = 258.57343
+theme_override_font_sizes/font_size = 24
+text = "Max"
+
+[node name="Label2" type="Label" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 173.0
+offset_bottom = 33.0
+theme_override_font_sizes/font_size = 24
+text = "Number Of Wagons"
+
+[node name="WagonMin" type="SpinBox" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 48.0
+offset_right = 192.0
+offset_bottom = 73.0
+tooltip_text = "Set the minimum number of wagons"
+
+[node name="WagonMax" type="SpinBox" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 88.0
+offset_right = 192.0
+offset_bottom = 113.0
+tooltip_text = "Set the maximum number of wagons"
+
+[node name="SpeedMin" type="SpinBox" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 193.57341
+offset_right = 192.0
+offset_bottom = 218.57341
+tooltip_text = "Set the minimum speed of the train"
+step = 0.1
+suffix = " Km"
+
+[node name="SpeedMax" type="SpinBox" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 233.57341
+offset_right = 192.0
+offset_bottom = 258.57343
+tooltip_text = "Set the maximum speed of the train"
+step = 0.1
+suffix = " Km"
+
+[connection signal="pressed" from="Panel/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Panel/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="value_changed" from="PanelOptions/WagonMin" to="." method="_on_wagon_min_value_changed"]
+[connection signal="value_changed" from="PanelOptions/WagonMax" to="." method="_on_wagon_max_value_changed"]
+[connection signal="value_changed" from="PanelOptions/SpeedMin" to="." method="_on_speed_min_value_changed"]
+[connection signal="value_changed" from="PanelOptions/SpeedMax" to="." method="_on_speed_max_value_changed"]

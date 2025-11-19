@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://thj1i5ey1me0"]
+
+[ext_resource type="Script" uid="uid://b730kcdqp63ty" path="res://main_menu.gd" id="1_fu7sn"]
+[ext_resource type="PackedScene" uid="uid://hkwkqfgp8u6a" path="res://prefabs/subway_car.tscn" id="2_nlkkf"]
+[ext_resource type="AudioStream" uid="uid://buxefla8j70yf" path="res://sound/metro-is-waiting-57273.mp3" id="3_qe12f"]
+[ext_resource type="PackedScene" uid="uid://cjg6flwpx2uer" path="res://prefabs/station_piece.tscn" id="4_8qtwp"]
+[ext_resource type="PackedScene" uid="uid://c4wsi1yifsslr" path="res://main_menu_hud.tscn" id="5_glbon"]
+
+[sub_resource type="Environment" id="Environment_1bvp3"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_lquwl"]
+
+[sub_resource type="Compositor" id="Compositor_7mycd"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_fu7sn")
+subwayCar = ExtResource("2_nlkkf")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1.1924881e-08, 0, 1, 0, 1, 0, -1, 0, 1.1924881e-08, 11.21424, 3.5055013, 0)
+current = true
+fov = 45.0
+
+[node name="AudioListener3D" type="AudioListener3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 3, 0)
+current = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.678928, 4.3697214, 0.1839633)
+stream = ExtResource("3_qe12f")
+volume_db = 4.179
+unit_size = 15.87
+max_db = -1.366
+pitch_scale = 0.98
+autoplay = true
+parameters/looping = true
+
+[node name="CarSpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
+
+[node name="StationPiece1" parent="." instance=ExtResource("4_8qtwp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.512209, 0, -12.520245)
+
+[node name="StationPiece2" parent="." instance=ExtResource("4_8qtwp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.512209, 0, 0)
+
+[node name="StationPiece3" parent="." instance=ExtResource("4_8qtwp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.512209, 0, 12.496321)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1bvp3")
+camera_attributes = SubResource("CameraAttributesPractical_lquwl")
+compositor = SubResource("Compositor_7mycd")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="MainMenuHUD" parent="." instance=ExtResource("5_glbon")]
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
