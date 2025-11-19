@@ -76,16 +76,21 @@ func _process(_delta: float) -> void:
 
     if player1_up:
         _adjust_counter_for_player(1, 1)
-        gameOverTimer.start()  # Reset timeout after last input
+        # Only reset timer if it's already running (game over phase)
+        if not gameOverTimer.is_stopped():
+            gameOverTimer.start()  # Reset timeout after last input
     if player1_down:
         _adjust_counter_for_player(1, -1)
-        gameOverTimer.start()  # Reset timeout after last input
+        if not gameOverTimer.is_stopped():
+            gameOverTimer.start()  # Reset timeout after last input
     if player2_up:
         _adjust_counter_for_player(2, 1)
-        gameOverTimer.start()  # Reset timeout after last input
+        if not gameOverTimer.is_stopped():
+            gameOverTimer.start()  # Reset timeout after last input
     if player2_down:
         _adjust_counter_for_player(2, -1)
-        gameOverTimer.start()  # Reset timeout after last input
+        if not gameOverTimer.is_stopped():
+            gameOverTimer.start()  # Reset timeout after last input
 
     # Check if last wagon has crossed the line
     _check_last_wagon_crossed_line()
