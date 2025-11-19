@@ -167,7 +167,7 @@ func _spawn_train() -> void:
 @onready var endGamePeepsDisplay: Path3D = $StationSections2/PeepsPath
 
 func _on_game_over_timer_timeout() -> void:
-    if !mainCameraAnimationPlayer.has_animation("end_game"):
+    if mainCameraAnimationPlayer.has_animation("end_game"):
         var peeps = endGamePeepsDisplay.get_children()
         for peep in peeps:
             peep.visible = true
