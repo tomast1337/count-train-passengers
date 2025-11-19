@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var mainCameraAnimationPlayer: AnimationPlayer = $Camera3D/AnimationPlayer
+@onready var mainCameraAnimationPlayer: AnimationPlayer = $AnimationPlayer
 
 @export var subwayCar: PackedScene;
 @export var maxSubwayCarsLength: int = 8;
@@ -71,25 +71,16 @@ func _process(_delta: float) -> void:
 
     if player1_up:
         _adjust_counter_for_player(1, 1)
-        # if timer is running, stop it
-        if !gameOverTimer.is_stopped():
-            gameOverTimer.stop()
-            gameOverTimer.start()
+        gameOverTimer.start()  # Reset timeout after last input
     if player1_down:
         _adjust_counter_for_player(1, -1)
-        if !gameOverTimer.is_stopped():
-            gameOverTimer.stop()
-            gameOverTimer.start()
+        gameOverTimer.start()  # Reset timeout after last input
     if player2_up:
         _adjust_counter_for_player(2, 1)
-        if !gameOverTimer.is_stopped():
-            gameOverTimer.stop()
-            gameOverTimer.start()
+        gameOverTimer.start()  # Reset timeout after last input
     if player2_down:
         _adjust_counter_for_player(2, -1)
-        if !gameOverTimer.is_stopped():
-            gameOverTimer.stop()
-            gameOverTimer.start()
+        gameOverTimer.start()  # Reset timeout after last input
 
     # Check if last wagon has crossed the line
     _check_last_wagon_crossed_line()
@@ -168,9 +159,7 @@ func _spawn_train() -> void:
 
 func _on_game_over_timer_timeout() -> void:
     if mainCameraAnimationPlayer.has_animation("end_game"):
-        var peeps = endGamePeepsDisplay.get_children()
-        for peep in peeps:
-            peep.visible = true
+        #var peeps = 
         mainCameraAnimationPlayer.play("end_game")
     else:
         push_error("end_game animation not found")
