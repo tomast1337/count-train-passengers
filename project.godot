@@ -8,9 +8,14 @@
 
 config_version=5
 
+[addons]
+
+enabled=PackedStringArray("res://addons/spawn_point_gizmo/plugin.cfg")
+
 [application]
 
 config/name="count_train_passagers"
+run/main_scene="uid://copuhe4v5l65q"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 

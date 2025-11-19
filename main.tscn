@@ -1,16 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://copuhe4v5l65q"]
+[gd_scene load_steps=9 format=3 uid="uid://copuhe4v5l65q"]
 
 [ext_resource type="PackedScene" uid="uid://hkwkqfgp8u6a" path="res://prefabs/subway_car.tscn" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://c6p3cfghbu61i" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://8ljla1k8fe37" path="res://hud.tscn" id="3_h2yge"]
+[ext_resource type="AudioStream" uid="uid://dwm4ubv68o2e4" path="res://sound/metro-is-waiting-57273.mp3" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://cjg6flwpx2uer" path="res://prefabs/station_piece.tscn" id="13_ycdy4"]
 
+[sub_resource type="Environment" id="Environment_1bvp3"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_lquwl"]
+
+[sub_resource type="Compositor" id="Compositor_7mycd"]
+
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_1bvp3")
+subwayCar = ExtResource("1_0xm2m")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1.1924881e-08, 0, 1, 0, 1, 0, -1, 0, 1.1924881e-08, 11.21424, 3.5055013, 0)
+current = true
 fov = 45.0
 
-[node name="SubwayCar" parent="." instance=ExtResource("1_0xm2m")]
+[node name="AudioListener3D" type="AudioListener3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 3, 0)
+current = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.678928, 4.3697214, 0.1839633)
+stream = ExtResource("3_lquwl")
+volume_db = 4.179
+unit_size = 15.87
+max_db = -1.366
+pitch_scale = 0.98
+autoplay = true
+parameters/looping = true
+
+[node name="CarSpawnPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
 
 [node name="StationPiece1" parent="." instance=ExtResource("13_ycdy4")]
@@ -24,5 +49,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.512209, 0, 12.496321)
 
 [node name="Control" parent="." instance=ExtResource("3_h2yge")]
 
-[node name="CarSpawnPoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1bvp3")
+camera_attributes = SubResource("CameraAttributesPractical_lquwl")
+compositor = SubResource("Compositor_7mycd")

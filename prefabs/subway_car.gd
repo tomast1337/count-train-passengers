@@ -78,6 +78,10 @@ func _spawn_peeps() -> void:
                     anim.loop_mode = Animation.LOOP_LINEAR
                 # Play the animation - it will loop automatically
                 anim_player.play("idle")
+                # Apply random offset to the animation
+                var anim_length = anim.length
+                var random_offset = randf() * anim_length
+                anim_player.seek(random_offset)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
