@@ -40,8 +40,59 @@ func _on_quit_button_pressed() -> void:
     get_tree().quit()
 
 func _on_start_button_pressed() -> void:
-    # start the game
-    get_tree().change_scene_to_file("uid://copuhe4v5l65q")
+    var main_scene: PackedScene = load("res://scenes/main.tscn")
+    if not main_scene:
+        push_error("Unable to load the main scene.")
+        return
+
+    var main_scene_instance: Node3D = main_scene.instantiate() as Node3D
+    if not main_scene_instance:
+        push_error("Failed to instantiate the main scene.")
+        return
+
+    _apply_selected_settings_to_game(main_scene_instance)
+    _replace_current_scene(main_scene_instance)
+
+
+func _apply_selected_settings_to_game(game_scene: Node3D) -> void:
+    if not game_scene:
+        return
+
+    var speed_min_value := float(speedMin.value)
+    var speed_max_value := float(speedMax.value)
+    var wagon_min_value := int(wagonMin.value)
+    var wagon_max_value := int(wagonMax.value)
+
+    # Clamp to ensure logical ordering before assigning.
+    if speed_max_value < speed_min_value:
+        var swap_speed := speed_min_value
+        speed_min_value = speed_max_value
+        speed_max_value = swap_speed
+
+    if wagon_max_value < wagon_min_value:
+        var swap_wagon := wagon_min_value
+        wagon_min_value = wagon_max_value
+        wagon_max_value = swap_wagon
+
+    game_scene.minSubwayCarSpeed = speed_min_value
+    game_scene.maxSubwayCarSpeed = speed_max_value
+    game_scene.minSubwayCarsLength = wagon_min_value
+    game_scene.maxSubwayCarsLength = wagon_max_value
+
+
+func _replace_current_scene(new_scene: Node3D) -> void:
+    if not new_scene:
+        return
+
+    var tree := get_tree()
+    var root := tree.root
+    var previous_scene := tree.current_scene
+
+    root.add_child(new_scene)
+    tree.current_scene = new_scene
+
+    if previous_scene:
+        previous_scene.queue_free()
 
 
 func _on_speed_max_value_changed(value: float) -> void:

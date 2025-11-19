@@ -5,6 +5,8 @@ extends Node3D
 @export var minSubwayCarsLength: int = 3;
 @export var subwayCarSpeed: float = 5.0;
 @export var subwayCarSpacing: float = 24.0;
+@export var minSubwayCarSpeed: float = 2.0;
+@export var maxSubwayCarSpeed: float = 16.0;
 
 var subwayCars: Array[Node3D] = [];
 @onready var carSpawnPoint: Node3D = $CarSpawnPoint
@@ -104,18 +106,42 @@ func _on_start_timer_timeout() -> void:
     countDownAudioStreamPlayer3D.play()
     print("Current timer duration: %d" % currentTimerDuration);
     if currentTimerDuration <= 0:
-        # set the length of the subway cars
-        var length = randi() % (maxSubwayCarsLength - minSubwayCarsLength + 1) + minSubwayCarsLength;
-        print("Spawning %d subway cars" % length);
-        # spawn the subway cars
-        for i in range(length):
-            var car = subwayCar.instantiate();
-            car.position = carSpawnPoint.position + Vector3(0, 0, i * subwayCarSpacing);
-            add_child(car);
-            subwayCars.append(car);
-            car.speed = subwayCarSpeed;
+        _spawn_train()
     else:
         # start the timer again
         startTimer.start()
 
     
+
+func _spawn_train() -> void:
+    if not subwayCar:
+        push_error("Subway car scene is not assigned.")
+        return
+
+    var length := _get_train_length()
+    var train_speed := _get_train_speed()
+    print("Spawning %d subway cars at speed %.2f" % [length, train_speed])
+
+    for i in range(length):
+        var car := subwayCar.instantiate()
+        car.position = carSpawnPoint.position + Vector3(0, 0, i * subwayCarSpacing);
+        add_child(car);
+        subwayCars.append(car);
+        car.speed = train_speed;
+
+
+func _get_train_length() -> int:
+    var min_length: int = min(minSubwayCarsLength, maxSubwayCarsLength)
+    var max_length: int = max(minSubwayCarsLength, maxSubwayCarsLength)
+    var length_range: int = max(1, max_length - min_length + 1)
+    return (randi() % length_range) + min_length
+
+
+func _get_train_speed() -> float:
+    var min_speed: float = min(minSubwayCarSpeed, maxSubwayCarSpeed)
+    var max_speed: float = max(minSubwayCarSpeed, maxSubwayCarSpeed)
+    if is_equal_approx(min_speed, max_speed):
+        return min_speed
+    if max_speed <= min_speed:
+        return subwayCarSpeed
+    return randf_range(min_speed, max_speed)
