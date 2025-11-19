@@ -3,8 +3,8 @@ extends Control
 @export var player1Counter: int = 0;
 @export var player2Counter: int = 0;
 
-@onready var player1CounterLabel: Label = $Player1Counter
-@onready var player2CounterLabel: Label = $Player2Counter
+@onready var player1CounterLabel: Label = $Player1/Player1Counter
+@onready var player2CounterLabel: Label = $Player2/Player2Counter
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

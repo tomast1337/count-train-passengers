@@ -118,3 +118,7 @@ func _on_tree_exiting() -> void:
     if audioStreamPlayer3D:
         audioStreamPlayer3D.stop()
         audioStreamPlayer3D.queue_free()
+
+func stop() -> void:
+    speed = 0.0
+    set_process(false)  # Disable _process to prevent any further movement

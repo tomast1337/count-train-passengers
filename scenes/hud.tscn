@@ -11,7 +11,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ahhtf")
 
-[node name="Player1Counter" type="Label" parent="."]
+[node name="Player1" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Player1Counter" type="Label" parent="Player1"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 0
 offset_left = 122.0
@@ -21,24 +26,14 @@ offset_bottom = 585.0
 theme_override_font_sizes/font_size = 48
 text = "0"
 
-[node name="Player2Counter" type="Label" parent="."]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 0
-offset_left = 762.0
-offset_top = 536.0
-offset_right = 862.0
-offset_bottom = 585.0
-theme_override_font_sizes/font_size = 48
-text = "0"
-
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="Player1"]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 512.0
 offset_right = 104.0
 offset_bottom = 552.0
 
-[node name="Label" type="Label" parent="ColorRect"]
+[node name="Label" type="Label" parent="Player1/ColorRect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -55,14 +50,14 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
 text = "W"
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="ColorRect2" type="ColorRect" parent="Player1"]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 568.0
 offset_right = 104.0
 offset_bottom = 608.0
 
-[node name="Label" type="Label" parent="ColorRect2"]
+[node name="Label" type="Label" parent="Player1/ColorRect2"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -79,14 +74,29 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
 text = "S"
 
-[node name="ColorRect3" type="ColorRect" parent="."]
+[node name="Player2" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Player2Counter" type="Label" parent="Player2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 0
+offset_left = 762.0
+offset_top = 536.0
+offset_right = 862.0
+offset_bottom = 585.0
+theme_override_font_sizes/font_size = 48
+text = "0"
+
+[node name="ColorRect3" type="ColorRect" parent="Player2"]
 layout_mode = 0
 offset_left = 704.0
 offset_top = 512.0
 offset_right = 744.0
 offset_bottom = 552.0
 
-[node name="Label" type="Label" parent="ColorRect3"]
+[node name="Label" type="Label" parent="Player2/ColorRect3"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -103,14 +113,14 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
 text = "↑"
 
-[node name="ColorRect4" type="ColorRect" parent="."]
+[node name="ColorRect4" type="ColorRect" parent="Player2"]
 layout_mode = 0
 offset_left = 704.0
 offset_top = 568.0
 offset_right = 744.0
 offset_bottom = 608.0
 
-[node name="Label" type="Label" parent="ColorRect4"]
+[node name="Label" type="Label" parent="Player2/ColorRect4"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

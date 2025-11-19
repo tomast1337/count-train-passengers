@@ -670,12 +670,15 @@ shadow_mesh = SubResource("ArrayMesh_x0hql")
 script = ExtResource("1_1bvp3")
 subwayCar = ExtResource("1_0xm2m")
 
+[node name="HUD" parent="." instance=ExtResource("3_h2yge")]
+
 [node name="StartTimer" type="Timer" parent="."]
 one_shot = true
 autostart = true
 
 [node name="GameOverTimer" type="Timer" parent="."]
 wait_time = 5.0
+one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Camera3D")
@@ -716,8 +719,6 @@ parameters/looping = true
 
 [node name="CarSpawnPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24)
-
-[node name="Control" parent="." instance=ExtResource("3_h2yge")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("8_dp3eg")
@@ -766,10 +767,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.512209, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.512209, 0, 12.496321)
 
 [node name="PeepsPath" type="Path3D" parent="StationSections2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.40530157, 0)
 curve = SubResource("Curve3D_muem4")
-
-[node name="PathFollow3D" type="PathFollow3D" parent="StationSections2/PeepsPath"]
-transform = Transform3D(0.9800752, -5.1874326e-07, 0.19862469, 0, 1, 2.6116734e-06, -0.19862469, -2.5596385e-06, 0.9800752, 5.409419, 1.067884, 16.425407)
 
 [node name="StationStaircaseSection" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.959559, 0, 44.863235)

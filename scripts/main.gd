@@ -12,9 +12,9 @@ extends Node3D
 
 var subwayCars: Array[Node3D] = [];
 @onready var carSpawnPoint: Node3D = $CarSpawnPoint
-@onready var hud: Control = $Control
-@onready var player1CounterLabel: Label = hud.get_node("Player1Counter") if hud else null
-@onready var player2CounterLabel: Label = hud.get_node("Player2Counter") if hud else null
+@onready var hud: Control = $HUD
+@onready var player1CounterLabel: Label = hud.get_node("Player1/Player1Counter") if hud else null
+@onready var player2CounterLabel: Label = hud.get_node("Player2/Player2Counter") if hud else null
 
 @onready var player1ClickSound: AudioStreamPlayer3D = $Player1ClickSound
 @onready var player2ClickSound: AudioStreamPlayer3D = $Player2ClickSound
@@ -39,6 +39,11 @@ func _ready() -> void:
     randomize()
 
     # connect the counter_changed signal to the player1Counter and player2Counter
+    if !player1CounterLabel:
+        push_error("Player1CounterLabel not found")
+    if !player2CounterLabel:
+        push_error("Player2CounterLabel not found")
+
     counter_changed.connect(func(player: int, counter: int):
         if player == 1:
             player1Counter = counter;
@@ -155,11 +160,37 @@ func _spawn_train() -> void:
 
 
 # end game peeps display path
-@onready var endGamePeepsDisplay: Path3D = $StationSections2/PeepsPath
+@onready var endGamePeepsDisplayPath: Path3D = $StationSections2/PeepsPath
 
 func _on_game_over_timer_timeout() -> void:
     if mainCameraAnimationPlayer.has_animation("end_game"):
-        #var peeps = 
+        # Stop all subway cars first
+        for car in currentTrainCars:
+            if is_instance_valid(car) and car.has_method("stop"):
+                car.stop()
+        
+        # Collect all peeps from all subway cars and reparent them
+        var all_peeps: Array[Node3D] = []
+        for car in currentTrainCars:
+            if not is_instance_valid(car):
+                continue
+            # Access the peeps array from the subway car
+            if "peeps" in car:
+                var car_peeps = car.peeps
+                if car_peeps is Array:
+                    for peep in car_peeps:
+                        if is_instance_valid(peep):
+                            # Reparent peep to main scene so it's no longer affected by car movement
+                            var old_parent = peep.get_parent()
+                            if old_parent:
+                                old_parent.remove_child(peep)
+                            add_child(peep)
+                            all_peeps.append(peep)
+        
+        # Distribute peeps evenly along the path
+        if not all_peeps.is_empty() and endGamePeepsDisplayPath:
+            _distribute_peeps_along_path(all_peeps, endGamePeepsDisplayPath)
+        
         mainCameraAnimationPlayer.play("end_game")
     else:
         push_error("end_game animation not found")
@@ -180,6 +211,46 @@ func _get_train_speed() -> float:
     if max_speed <= min_speed:
         return subwayCarSpeed
     return randf_range(min_speed, max_speed)
+
+func _distribute_peeps_along_path(peeps: Array[Node3D], path: Path3D) -> void:
+    if peeps.is_empty() or not path or not path.curve:
+        return
+    
+    var curve = path.curve
+    var path_length = curve.get_baked_length()
+    var peep_count = peeps.size()
+    
+    if peep_count == 0:
+        return
+    
+    # Distribute peeps evenly along the path
+    for i in range(peep_count):
+        var peep = peeps[i]
+        if not is_instance_valid(peep):
+            continue
+        
+        # Calculate offset along the path (0.0 to 1.0)
+        # For N peeps, distribute from start (0.0) to end (1.0)
+        var offset: float = 0.0
+        if peep_count > 1:
+            offset = float(i) / float(peep_count - 1)
+        else:
+            offset = 0.5  # Single peep goes to middle
+        offset = clamp(offset, 0.0, 1.0)
+        
+        # Get the position along the curve at this offset
+        var path_position = curve.sample_baked(offset * path_length)
+        
+        # Convert to global position
+        var target_position = path.to_global(path_position)
+        
+        # Move the peep to this position
+        peep.global_position = target_position
+        # rotate the peep 180 degrees around the y axis
+        peep.rotation.y = PI + peep.rotation.y 
+        
+        # Make peep visible if it wasn't already
+        peep.visible = true
 
 func _check_last_wagon_crossed_line() -> void:
     # Only check if we have cars and haven't emitted signal yet
