@@ -91,7 +91,7 @@ var currentTimerDuration: int = timerDuration;
 @onready var countDownAudioStreamPlayer3D: AudioStreamPlayer3D = $CountDownAudioStreamPlayer3D
 
 var audios = {
-    "0": preload("res://sound/4.mp3"),
+    "0": preload("res://sound/0.mp3"),
     "1": preload("res://sound/4.mp3"),
     "2": preload("res://sound/3.mp3"),
     "3": preload("res://sound/2.mp3"),
