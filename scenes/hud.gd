@@ -1,17 +1,17 @@
 extends Control
 
 const SCORE_TEMPLATE: String = """[b]Round Result:[/b]
-Player 1 Guess: {Player1Guess} → {Player1Score} Points
-Player 2 Guess: {Player2Guess} → {Player2Score} Points
+Player 1 Guess: {Player1Guess} → {Player1RoundScore} Points
+Player 2 Guess: {Player2Guess} → {Player2RoundScore} Points
 
 [b]Correct Answer:[/b] 
 {CorrectAnswer}
 
 --------------------------------
 
-[b]Game Score:[/b]
-Player 1: {Player1Score} Points
-Player 2: {Player2Score} Points
+[b]Game Score (Total):[/b]
+Player 1: {Player1TotalScore} Points
+Player 2: {Player2TotalScore} Points
 """
 
 @export var player1Counter: int = 0;
@@ -57,11 +57,13 @@ func show_score_label() -> void:
     if scoreBoard:
         scoreBoard.visible = true
 
-func update_score_label(player1Guess: int, player2Guess: int, correctAnswer: int, player1Score: int, player2Score: int) -> void:
+func update_score_label(player1Guess: int, player2Guess: int, correctAnswer: int, player1RoundScore: int, player2RoundScore: int, player1TotalScore: int, player2TotalScore: int) -> void:
     scoreLabel.text = SCORE_TEMPLATE.format({
         "Player1Guess": player1Guess,
         "Player2Guess": player2Guess,
         "CorrectAnswer": correctAnswer,
-        "Player1Score": player1Score,
-        "Player2Score": player2Score,
+        "Player1RoundScore": player1RoundScore,
+        "Player2RoundScore": player2RoundScore,
+        "Player1TotalScore": player1TotalScore,
+        "Player2TotalScore": player2TotalScore,
     })

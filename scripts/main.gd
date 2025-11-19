@@ -27,12 +27,21 @@ var subwayCars: Array[Node3D] = [];
 @export var maxCounterValue: int = 999;
 @export var lineZPosition: float = 0.0;  # Z position of the line to cross
 
+# Score calculation parameters
+@export var perfect_score: int = 100;  # Score for perfect guess
+@export var worst_score: int = 0;  # Minimum score for worst guess
+@export var score_error_multiplier: float = 50.0;  # Multiplier for percentage error in score calculation
+@export var min_percentage_error: float = 0.0;  # Minimum percentage error (clamp)
+@export var max_percentage_error: float = 1.0;  # Maximum percentage error (clamp)
+
 var currentTrainCars: Array[Node3D] = [];  # Track cars of the current train
 var hasEmittedSignalForCurrentTrain: bool = false;  # Prevent multiple emissions
 var reparentedPeeps: Array[Node3D] = [];  # Track peeps that were reparented to main scene
 
-var player1Score: int = 0;
-var player2Score: int = 0;
+var player1Score: int = 0;  # Current round score
+var player2Score: int = 0;  # Current round score
+var player1TotalScore: int = 0;  # Cumulative score across all rounds
+var player2TotalScore: int = 0;  # Cumulative score across all rounds
 var correctAnswer: int = 0;
 
 signal counter_changed(player: int, counter: int);
@@ -180,7 +189,7 @@ func _on_game_over_timer_timeout() -> void:
     hud.hide_counter_labels()
     
     # Update and show score display
-    hud.update_score_label(player1Counter, player2Counter, correctAnswer, player1Score, player2Score)
+    hud.update_score_label(player1Counter, player2Counter, correctAnswer, player1Score, player2Score, player1TotalScore, player2TotalScore)
     hud.show_score_label()
     
     if mainCameraAnimationPlayer.has_animation("end_game"):
@@ -289,7 +298,7 @@ func _count_total_peeps() -> int:
 func _calculate_score(guess: int, actual: int) -> int:
     if actual == 0:
         # If no peeps, perfect guess is 0
-        return 100 if guess == 0 else 50
+        return perfect_score if guess == 0 else worst_score
     
     # Calculate the difference
     var difference = abs(guess - actual)
@@ -298,14 +307,14 @@ func _calculate_score(guess: int, actual: int) -> int:
     var percentage_error = float(difference) / float(actual)
     
     # Clamp percentage error to 0-1 range (100% error = worst case)
-    percentage_error = clamp(percentage_error, 0.0, 1.0)
+    percentage_error = clamp(percentage_error, min_percentage_error, max_percentage_error)
     
-    # Interpolate score: 100 for perfect (0% error), 50 for worst (100% error)
-    # Score = 100 - (percentage_error * 50)
-    var score = 100.0 - (percentage_error * 50.0)
+    # Interpolate score: perfect_score for perfect (0% error), worst_score for worst (100% error)
+    # Score = perfect_score - (percentage_error * score_error_multiplier)
+    var score = float(perfect_score) - (percentage_error * score_error_multiplier)
     
-    # Round to nearest integer and clamp to 50-100
-    return clampi(int(round(score)), 50, 100)
+    # Round to nearest integer and clamp to worst_score-perfect_score
+    return clampi(int(round(score)), worst_score, perfect_score)
 
 func _check_last_wagon_crossed_line() -> void:
     # Only check if we have cars and haven't emitted signal yet
@@ -340,12 +349,20 @@ func _on_last_wagon_crossed_line() -> void:
     correctAnswer = _count_total_peeps()
     print("Correct answer (total peeps): %d" % correctAnswer)
     
-    # Calculate player scores based on accuracy
-    player1Score = _calculate_score(player1Counter, correctAnswer)
-    player2Score = _calculate_score(player2Counter, correctAnswer)
+    # Calculate round scores based on accuracy
+    var roundScore1 = _calculate_score(player1Counter, correctAnswer)
+    var roundScore2 = _calculate_score(player2Counter, correctAnswer)
     
-    print("Player 1 guess: %d, score: %d" % [player1Counter, player1Score])
-    print("Player 2 guess: %d, score: %d" % [player2Counter, player2Score])
+    # Add round scores to cumulative totals
+    player1TotalScore += roundScore1
+    player2TotalScore += roundScore2
+    
+    # Store round scores for display
+    player1Score = roundScore1
+    player2Score = roundScore2
+    
+    print("Player 1 guess: %d, round score: %d, total score: %d" % [player1Counter, player1Score, player1TotalScore])
+    print("Player 2 guess: %d, round score: %d, total score: %d" % [player2Counter, player2Score, player2TotalScore])
     
     gameOverTimer.start()
 
@@ -368,14 +385,15 @@ func _start_new_round() -> void:
             peep.queue_free()
     reparentedPeeps.clear()
     
-    # Reset game state
+    # Reset game state (but keep cumulative scores)
     player1Counter = 0
     player2Counter = 0
     currentTimerDuration = timerDuration
     hasEmittedSignalForCurrentTrain = false
     correctAnswer = 0
-    player1Score = 0
-    player2Score = 0
+    player1Score = 0  # Reset round score
+    player2Score = 0  # Reset round score
+    # Note: player1TotalScore and player2TotalScore are NOT reset - they persist across rounds
     
     # Stop game over timer
     if not gameOverTimer.is_stopped():
