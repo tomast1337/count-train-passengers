@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c4wsi1yifsslr"]
 
-[ext_resource type="Script" uid="uid://1s7onpj8fxsa" path="res://main_menu_hud.gd" id="1_lj1x3"]
+[ext_resource type="Script" uid="uid://1s7onpj8fxsa" path="res://scripts/main_menu_hud.gd" id="1_lj1x3"]
 [ext_resource type="FontFile" uid="uid://r87dka3mbmna" path="res://fonts/Jacquard24-Regular.ttf" id="2_q1o4g"]
 
 [node name="MainMenuHUD" type="Control"]
@@ -72,95 +72,144 @@ offset_top = 64.0
 offset_right = 768.0
 offset_bottom = 384.0
 
-[node name="Label" type="Label" parent="PanelOptions"]
+[node name="Label3" type="Label" parent="PanelOptions"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 161.57341
-offset_right = 111.0
-offset_bottom = 186.57341
+offset_left = 16.0
+offset_top = 7.9999847
+offset_right = 183.0
+offset_bottom = 32.999985
 theme_override_font_sizes/font_size = 24
-text = "Train Speed"
+text = "Game Play Options"
 
-[node name="Min" type="Label" parent="PanelOptions"]
+[node name="Label2" type="Label" parent="PanelOptions"]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 48.0
-offset_right = 64.0
+offset_right = 181.0
 offset_bottom = 73.0
+theme_override_font_sizes/font_size = 24
+text = "Number Of Wagons"
+
+[node name="Min" type="Label" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 88.0
+offset_right = 72.0
+offset_bottom = 113.0
 theme_override_font_sizes/font_size = 24
 text = "Min"
 
 [node name="Max" type="Label" parent="PanelOptions"]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 88.0
-offset_right = 64.0
-offset_bottom = 113.0
+offset_left = 24.0
+offset_top = 128.0
+offset_right = 72.0
+offset_bottom = 153.0
 theme_override_font_sizes/font_size = 24
 text = "Max"
 
-[node name="Min2" type="Label" parent="PanelOptions"]
+[node name="WagonMin" type="SpinBox" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 88.0
+offset_right = 200.0
+offset_bottom = 113.0
+tooltip_text = "Set the minimum number of wagons"
+min_value = 1.0
+value = 3.0
+
+[node name="WagonMax" type="SpinBox" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 128.0
+offset_right = 200.0
+offset_bottom = 153.0
+tooltip_text = "Set the maximum number of wagons"
+value = 8.0
+
+[node name="Label" type="Label" parent="PanelOptions"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 193.57341
-offset_right = 64.0
-offset_bottom = 218.57341
+offset_top = 201.57343
+offset_right = 119.0
+offset_bottom = 226.57343
+theme_override_font_sizes/font_size = 24
+text = "Train Speed"
+
+[node name="Min2" type="Label" parent="PanelOptions"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 233.57343
+offset_right = 72.0
+offset_bottom = 258.57343
 theme_override_font_sizes/font_size = 24
 text = "Min"
 
 [node name="Max2" type="Label" parent="PanelOptions"]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 233.57341
-offset_right = 64.0
-offset_bottom = 258.57343
+offset_left = 24.0
+offset_top = 273.57343
+offset_right = 72.0
+offset_bottom = 298.57343
 theme_override_font_sizes/font_size = 24
 text = "Max"
 
-[node name="Label2" type="Label" parent="PanelOptions"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 173.0
-offset_bottom = 33.0
-theme_override_font_sizes/font_size = 24
-text = "Number Of Wagons"
-
-[node name="WagonMin" type="SpinBox" parent="PanelOptions"]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 48.0
-offset_right = 192.0
-offset_bottom = 73.0
-tooltip_text = "Set the minimum number of wagons"
-
-[node name="WagonMax" type="SpinBox" parent="PanelOptions"]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 88.0
-offset_right = 192.0
-offset_bottom = 113.0
-tooltip_text = "Set the maximum number of wagons"
-
 [node name="SpeedMin" type="SpinBox" parent="PanelOptions"]
 layout_mode = 0
-offset_left = 72.0
-offset_top = 193.57341
-offset_right = 192.0
-offset_bottom = 218.57341
+offset_left = 80.0
+offset_top = 233.57341
+offset_right = 200.0
+offset_bottom = 258.57343
 tooltip_text = "Set the minimum speed of the train"
+min_value = 0.1
 step = 0.1
+value = 4.0
 suffix = " Km"
 
 [node name="SpeedMax" type="SpinBox" parent="PanelOptions"]
 layout_mode = 0
-offset_left = 72.0
-offset_top = 233.57341
-offset_right = 192.0
-offset_bottom = 258.57343
+offset_left = 80.0
+offset_top = 273.57343
+offset_right = 200.0
+offset_bottom = 298.57343
 tooltip_text = "Set the maximum speed of the train"
+max_value = 24.0
 step = 0.1
+value = 12.0
 suffix = " Km"
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 64.0
+offset_right = 1088.0
+offset_bottom = 168.0
+
+[node name="Label" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 131.0
+offset_bottom = 33.0
+theme_override_font_sizes/font_size = 24
+text = "Audio Options"
+
+[node name="Label2" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 173.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 24
+text = "Master Volume"
+
+[node name="VolumeHSlider" type="HSlider" parent="Panel2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 73.0
+offset_right = 248.0
+offset_bottom = 89.0
+value = 50.0
 
 [connection signal="pressed" from="Panel/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Panel/QuitButton" to="." method="_on_quit_button_pressed"]
@@ -168,3 +217,4 @@ suffix = " Km"
 [connection signal="value_changed" from="PanelOptions/WagonMax" to="." method="_on_wagon_max_value_changed"]
 [connection signal="value_changed" from="PanelOptions/SpeedMin" to="." method="_on_speed_min_value_changed"]
 [connection signal="value_changed" from="PanelOptions/SpeedMax" to="." method="_on_speed_max_value_changed"]
+[connection signal="value_changed" from="Panel2/VolumeHSlider" to="." method="_on_volume_h_slider_value_changed"]

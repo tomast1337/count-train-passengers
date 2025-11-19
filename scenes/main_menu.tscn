@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://thj1i5ey1me0"]
 
-[ext_resource type="Script" uid="uid://b730kcdqp63ty" path="res://main_menu.gd" id="1_fu7sn"]
+[ext_resource type="Script" uid="uid://b730kcdqp63ty" path="res://scripts/main_menu.gd" id="1_fu7sn"]
 [ext_resource type="PackedScene" uid="uid://hkwkqfgp8u6a" path="res://prefabs/subway_car.tscn" id="2_nlkkf"]
 [ext_resource type="AudioStream" uid="uid://buxefla8j70yf" path="res://sound/metro-is-waiting-57273.mp3" id="3_qe12f"]
 [ext_resource type="PackedScene" uid="uid://cjg6flwpx2uer" path="res://prefabs/station_piece.tscn" id="4_8qtwp"]
-[ext_resource type="PackedScene" uid="uid://c4wsi1yifsslr" path="res://main_menu_hud.tscn" id="5_glbon"]
+[ext_resource type="PackedScene" uid="uid://c4wsi1yifsslr" path="res://scenes/main_menu_hud.tscn" id="5_glbon"]
 
 [sub_resource type="Environment" id="Environment_1bvp3"]
 
@@ -15,6 +15,7 @@
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_fu7sn")
 subwayCar = ExtResource("2_nlkkf")
+minSubwayCarSpeed = 6.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1.1924881e-08, 0, 1, 0, 1, 0, -1, 0, 1.1924881e-08, 11.21424, 3.5055013, 0)

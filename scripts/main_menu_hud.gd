@@ -5,6 +5,8 @@ extends Control
 @onready var wagonMin: SpinBox = $PanelOptions/WagonMin
 @onready var wagonMax: SpinBox = $PanelOptions/WagonMax
 
+@onready var quitButton: Button = $Panel/QuitButton
+
 @export var minSubwayCarSpeed: float = 2.0;
 @export var maxSubwayCarSpeed: float = 16.0;
 @export var minSubwayCarsLength: int = 3;
@@ -22,6 +24,10 @@ func _ready() -> void:
     if wagonMax:
         wagonMax.value = maxSubwayCarsLength
 
+    # if running in a browser, hide the quit button
+    if OS.get_name() == "HTML5":
+        quitButton.visible = false
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -35,7 +41,7 @@ func _on_quit_button_pressed() -> void:
 
 func _on_start_button_pressed() -> void:
     # start the game
-    get_tree().change_scene_to_file("res://main.tscn")
+    get_tree().change_scene_to_file("uid://copuhe4v5l65q")
 
 
 func _on_speed_max_value_changed(value: float) -> void:
@@ -93,3 +99,10 @@ func _on_wagon_min_value_changed(value: float) -> void:
         wagonMin.value = max_value - min_difference
     else:
         wagonMin.value = new_value
+
+
+func _on_volume_h_slider_value_changed(value: float) -> void:
+    # Slider is 0-100, convert to a linear 0-1 value, then to dB
+    var normalized_volume: float = clamp(value / 100.0, 0.0, 1.0)
+    var db_volume: float = linear_to_db(normalized_volume)
+    AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), db_volume)
