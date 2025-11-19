@@ -725,7 +725,6 @@ camera_attributes = SubResource("CameraAttributesPractical_lquwl")
 compositor = SubResource("Compositor_7mycd")
 
 [node name="StationSections" type="Node3D" parent="."]
-visible = false
 
 [node name="StationPiece1" parent="StationSections" instance=ExtResource("13_ycdy4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.512209, 0, -12.520245)
@@ -774,7 +773,6 @@ transform = Transform3D(0.9800752, -5.1874326e-07, 0.19862469, 0, 1, 2.6116734e-
 
 [node name="StationStaircaseSection" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.959559, 0, 44.863235)
-visible = false
 
 [node name="St_03" type="MeshInstance3D" parent="StationStaircaseSection"]
 transform = Transform3D(0, 75.64413, -2.2543707e-06, 2.2543707e-06, 0, 75.64413, -75.64413, 2.2543707e-06, 0, -4.4738483, 3.8151042, -19.970016)
@@ -818,7 +816,6 @@ skeleton = NodePath("")
 
 [node name="StationBoxEndSection" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -67.19291)
-visible = false
 
 [node name="St" type="MeshInstance3D" parent="StationBoxEndSection"]
 transform = Transform3D(0, 75.64413, -2.2543707e-06, 2.2543707e-06, 0, 75.64413, -75.64413, 2.2543707e-06, 0, 3.8225813, 4.46792, 1.9948807)

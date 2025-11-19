@@ -1,5 +1,7 @@
 extends Node3D
 
+@onready var mainCameraAnimationPlayer: AnimationPlayer = $AnimationPlayer
+
 @export var subwayCar: PackedScene;
 @export var maxSubwayCarsLength: int = 8;
 @export var minSubwayCarsLength: int = 3;
@@ -24,6 +26,7 @@ var subwayCars: Array[Node3D] = [];
 @export var player2Counter: int = 0;
 @export var maxCounterValue: int = 999;
 
+
 signal counter_changed(player: int, counter: int);
 
 # Called when the node enters the scene tree for the first time.
@@ -46,6 +49,12 @@ func _ready() -> void:
 
     countDownAudioStreamPlayer3D.stream = audios[str(timerDuration)]
     countDownAudioStreamPlayer3D.play()
+
+    #play reset camera animation
+    if  mainCameraAnimationPlayer.has_animation("RESET"):
+        mainCameraAnimationPlayer.play("RESET")
+    else:
+        push_error("RESET animation not found")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -115,8 +124,6 @@ func _on_start_timer_timeout() -> void:
         # start the timer again
         startTimer.start()
 
-    
-
 func _spawn_train() -> void:
     if not subwayCar:
         push_error("Subway car scene is not assigned.")
@@ -132,6 +139,16 @@ func _spawn_train() -> void:
         add_child(car);
         subwayCars.append(car);
         car.speed = train_speed;
+
+
+# end game peeps display path
+@onready var endGamePeepsDisplay: Path3D = $StationSections2/PeepsPath
+
+func _on_game_over_timer_timeout() -> void:
+    # spawn the peeps on the end game peeps display path
+    var peeps = endGamePeepsDisplay.get_children()
+    for peep in peeps:
+        peep.visible = true
 
 
 func _get_train_length() -> int:
