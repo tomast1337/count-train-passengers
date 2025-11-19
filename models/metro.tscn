@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://u5asd80unmyl"]
+
+[ext_resource type="PackedScene" uid="uid://db0b3c2laib43" path="res://models/Metro_PSX/Models/Metro.fbx" id="1_73d30"]
+
+[node name="Metro" instance=ExtResource("1_73d30")]
+
+[node name="ticket_machine" parent="." index="50"]
+transform = Transform3D(47.473614, 0, 0, 0, -5.6592958e-06, 47.47361, 0, -47.47361, -5.6592958e-06, -11.63856, 2.5401468, -13.150426)
+
+[node name="trash_can" parent="." index="51"]
+transform = Transform3D(87.845795, 0, 0, 0, 5.2360174e-06, 87.845795, 0, -87.845795, 5.2360174e-06, 3.682532, 2.312831, -13.160504)
+
+[node name="Vending_machine" parent="." index="53"]
+transform = Transform3D(113.23227, 0, 0, 0, -1.3498338e-05, 113.23226, 0, -113.23226, -1.3498338e-05, -13.1998415, 2.9058914, -12.919687)
+
+[node name="automatic_ticket_gate" parent="." index="65"]
+transform = Transform3D(99.98162, 1.9179993, 2.2864332e-07, 0, -1.1920929e-05, 100.00001, 1.9179994, -99.98161, -1.1918736e-05, 0.5938382, 2.2705183, -13.192813)
