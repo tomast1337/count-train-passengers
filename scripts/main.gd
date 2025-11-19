@@ -172,6 +172,11 @@ func _spawn_train() -> void:
 
 func _on_game_over_timer_timeout() -> void:
     hud.hide_counter_labels()
+    
+    # Update and show score display
+    hud.update_score_label(player1Counter, player2Counter, correctAnswer, player1Score, player2Score)
+    hud.show_score_label()
+    
     if mainCameraAnimationPlayer.has_animation("end_game"):
         # Stop all subway cars first
         for car in currentTrainCars:
@@ -261,6 +266,40 @@ func _distribute_peeps_along_path(peeps: Array[Node3D], path: Path3D) -> void:
         # Make peep visible if it wasn't already
         peep.visible = true
 
+func _count_total_peeps() -> int:
+    var total_peeps: int = 0
+    for car in currentTrainCars:
+        if not is_instance_valid(car):
+            continue
+        if "peeps" in car:
+            var car_peeps = car.peeps
+            if car_peeps is Array:
+                for peep in car_peeps:
+                    if is_instance_valid(peep):
+                        total_peeps += 1
+    return total_peeps
+
+func _calculate_score(guess: int, actual: int) -> int:
+    if actual == 0:
+        # If no peeps, perfect guess is 0
+        return 100 if guess == 0 else 50
+    
+    # Calculate the difference
+    var difference = abs(guess - actual)
+    
+    # Calculate percentage error (how far off as a percentage of actual)
+    var percentage_error = float(difference) / float(actual)
+    
+    # Clamp percentage error to 0-1 range (100% error = worst case)
+    percentage_error = clamp(percentage_error, 0.0, 1.0)
+    
+    # Interpolate score: 100 for perfect (0% error), 50 for worst (100% error)
+    # Score = 100 - (percentage_error * 50)
+    var score = 100.0 - (percentage_error * 50.0)
+    
+    # Round to nearest integer and clamp to 50-100
+    return clampi(int(round(score)), 50, 100)
+
 func _check_last_wagon_crossed_line() -> void:
     # Only check if we have cars and haven't emitted signal yet
     if currentTrainCars.is_empty() or hasEmittedSignalForCurrentTrain:
@@ -290,4 +329,15 @@ func _check_last_wagon_crossed_line() -> void:
 
 
 func _on_last_wagon_crossed_line() -> void:
+    # Count total peeps in the train
+    correctAnswer = _count_total_peeps()
+    print("Correct answer (total peeps): %d" % correctAnswer)
+    
+    # Calculate player scores based on accuracy
+    player1Score = _calculate_score(player1Counter, correctAnswer)
+    player2Score = _calculate_score(player2Counter, correctAnswer)
+    
+    print("Player 1 guess: %d, score: %d" % [player1Counter, player1Score])
+    print("Player 2 guess: %d, score: %d" % [player2Counter, player2Score])
+    
     gameOverTimer.start()

@@ -1,8 +1,8 @@
 extends Control
 
 const SCORE_TEMPLATE: String = """[b]Round Result:[/b]
-Player 1 Guess: {Player1Guess}
-Player 2 Guess: {Player2Guess}
+Player 1 Guess: {Player1Guess} → {Player1Score} Points
+Player 2 Guess: {Player2Guess} → {Player2Score} Points
 
 [b]Correct Answer:[/b] 
 {CorrectAnswer}
@@ -10,8 +10,8 @@ Player 2 Guess: {Player2Guess}
 --------------------------------
 
 [b]Game Score:[/b]
-Player 1: {Player1Score} Rounds Won
-Player 2: {Player2Score} Rounds Won
+Player 1: {Player1Score} Points
+Player 2: {Player2Score} Points
 """
 
 @export var player1Counter: int = 0;
@@ -19,7 +19,7 @@ Player 2: {Player2Score} Rounds Won
 
 @onready var player1CounterLabel: Label = $Player1/Player1Counter
 @onready var player2CounterLabel: Label = $Player2/Player2Counter
-@onready var scoreLabel: Label = $ScoreBoard/ScoreLabel
+@onready var scoreLabel: RichTextLabel = $ScoreBoard/ScoreLabel
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

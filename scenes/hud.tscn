@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://8ljla1k8fe37"]
+[gd_scene load_steps=3 format=3 uid="uid://8ljla1k8fe37"]
 
 [ext_resource type="Script" uid="uid://ohw4qrwxpmrb" path="res://scenes/hud.gd" id="1_ahhtf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahhtf"]
+bg_color = Color(0, 0, 0, 0.52000004)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -10,6 +13,46 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ahhtf")
+
+[node name="ScoreBoard" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoreLabel" type="RichTextLabel" parent="ScoreBoard"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -210.0
+offset_right = 384.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 32
+theme_override_styles/background = SubResource("StyleBoxFlat_ahhtf")
+bbcode_enabled = true
+text = "[b]Round Result:[/b]
+Player 1 Guess: {Player1Guess} → {Player1Score} Points
+Player 2 Guess: {Player2Guess} → {Player2Score} Points
+
+[b]Correct Answer:[/b] 
+{CorrectAnswer}
+
+--------------------------------
+
+[b]Game Score:[/b]
+Player 1: {Player1Score} Points
+Player 2: {Player2Score} Points"
+scroll_active = false
 
 [node name="Player1" type="Control" parent="."]
 anchors_preset = 0
