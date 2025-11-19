@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var mainCameraAnimationPlayer: AnimationPlayer = $AnimationPlayer
+@onready var mainCameraAnimationPlayer: AnimationPlayer = $Camera3D/AnimationPlayer
 
 @export var subwayCar: PackedScene;
 @export var maxSubwayCarsLength: int = 8;
@@ -25,9 +25,14 @@ var subwayCars: Array[Node3D] = [];
 @export var player1Counter: int = 0;
 @export var player2Counter: int = 0;
 @export var maxCounterValue: int = 999;
+@export var lineZPosition: float = 0.0;  # Z position of the line to cross
+
+var currentTrainCars: Array[Node3D] = [];  # Track cars of the current train
+var hasEmittedSignalForCurrentTrain: bool = false;  # Prevent multiple emissions
 
 
 signal counter_changed(player: int, counter: int);
+signal last_wagon_crossed_line();
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -66,16 +71,28 @@ func _process(_delta: float) -> void:
 
     if player1_up:
         _adjust_counter_for_player(1, 1)
-        gameOverTimer.reset()
+        # if timer is running, stop it
+        if !gameOverTimer.is_stopped():
+            gameOverTimer.stop()
+            gameOverTimer.start()
     if player1_down:
         _adjust_counter_for_player(1, -1)
-        gameOverTimer.reset()
+        if !gameOverTimer.is_stopped():
+            gameOverTimer.stop()
+            gameOverTimer.start()
     if player2_up:
         _adjust_counter_for_player(2, 1)
-        gameOverTimer.reset()
+        if !gameOverTimer.is_stopped():
+            gameOverTimer.stop()
+            gameOverTimer.start()
     if player2_down:
         _adjust_counter_for_player(2, -1)
-        gameOverTimer.reset()
+        if !gameOverTimer.is_stopped():
+            gameOverTimer.stop()
+            gameOverTimer.start()
+
+    # Check if last wagon has crossed the line
+    _check_last_wagon_crossed_line()
 
 func _adjust_counter_for_player(player: int, delta: int) -> void:
     if delta == 0:
@@ -133,11 +150,16 @@ func _spawn_train() -> void:
     var train_speed := _get_train_speed()
     print("Spawning %d subway cars at speed %.2f" % [length, train_speed])
 
+    # Reset tracking for new train
+    currentTrainCars.clear()
+    hasEmittedSignalForCurrentTrain = false
+
     for i in range(length):
         var car := subwayCar.instantiate()
         car.position = carSpawnPoint.position + Vector3(0, 0, i * subwayCarSpacing);
         add_child(car);
         subwayCars.append(car);
+        currentTrainCars.append(car);
         car.speed = train_speed;
 
 
@@ -145,10 +167,13 @@ func _spawn_train() -> void:
 @onready var endGamePeepsDisplay: Path3D = $StationSections2/PeepsPath
 
 func _on_game_over_timer_timeout() -> void:
-    # spawn the peeps on the end game peeps display path
-    var peeps = endGamePeepsDisplay.get_children()
-    for peep in peeps:
-        peep.visible = true
+    if !mainCameraAnimationPlayer.has_animation("end_game"):
+        var peeps = endGamePeepsDisplay.get_children()
+        for peep in peeps:
+            peep.visible = true
+        mainCameraAnimationPlayer.play("end_game")
+    else:
+        push_error("end_game animation not found")
 
 
 func _get_train_length() -> int:
@@ -166,3 +191,34 @@ func _get_train_speed() -> float:
     if max_speed <= min_speed:
         return subwayCarSpeed
     return randf_range(min_speed, max_speed)
+
+func _check_last_wagon_crossed_line() -> void:
+    # Only check if we have cars and haven't emitted signal yet
+    if currentTrainCars.is_empty() or hasEmittedSignalForCurrentTrain:
+        return
+
+    # Find the last wagon (the one with the highest z position, since they're spawned with increasing z offsets)
+    var lastWagon: Node3D = null
+    var highestZ: float = -INF
+
+    for car in currentTrainCars:
+        # Remove invalid cars (that may have been freed)
+        if not is_instance_valid(car):
+            continue
+        
+        var carZ = car.global_position.z
+        if carZ > highestZ:
+            highestZ = carZ
+            lastWagon = car
+
+    # Check if last wagon has crossed the line
+    # Since cars move in negative z direction, they cross when z <= lineZPosition
+    if lastWagon and is_instance_valid(lastWagon):
+        if lastWagon.global_position.z <= lineZPosition:
+            hasEmittedSignalForCurrentTrain = true
+            last_wagon_crossed_line.emit()
+            print("Last wagon crossed the line at z = %.2f" % lineZPosition)
+
+
+func _on_last_wagon_crossed_line() -> void:
+    gameOverTimer.start()
