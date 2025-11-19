@@ -168,6 +168,7 @@ func _spawn_train() -> void:
 @onready var endGamePeepsDisplayPath: Path3D = $StationSections2/PeepsPath
 
 func _on_game_over_timer_timeout() -> void:
+    hud.hide_counter_labels()
     if mainCameraAnimationPlayer.has_animation("end_game"):
         # Stop all subway cars first
         for car in currentTrainCars:

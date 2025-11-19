@@ -15,3 +15,19 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
     pass
+
+func hide_counter_labels() -> void:
+    var player1Control: Control = $Player1
+    var player2Control: Control = $Player2
+    if player1Control:
+        player1Control.visible = false
+    if player2Control:
+        player2Control.visible = false
+
+func show_counter_labels() -> void:
+    var player1Control: Control = $Player1
+    var player2Control: Control = $Player2
+    if player1Control:
+        player1Control.visible = true
+    if player2Control:
+        player2Control.visible = true
