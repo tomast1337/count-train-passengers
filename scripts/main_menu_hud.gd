@@ -28,13 +28,6 @@ func _ready() -> void:
     if OS.get_name() == "HTML5":
         quitButton.visible = false
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-    pass
-
-
-
 func _on_quit_button_pressed() -> void:
     # stop the game
     get_tree().quit()

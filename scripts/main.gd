@@ -70,7 +70,7 @@ func _ready() -> void:
     _update_counter_label(player1CounterLabel, player1Counter)
     _update_counter_label(player2CounterLabel, player2Counter)
 
-    countDownAudioStreamPlayer3D.stream = audios[str(timerDuration)]
+    countDownAudioStreamPlayer3D.stream = AUDIOS[str(timerDuration)]
     countDownAudioStreamPlayer3D.play()
 
     # Connect animation finished signal
@@ -141,7 +141,7 @@ var currentTimerDuration: int = timerDuration;
 
 @onready var countDownAudioStreamPlayer3D: AudioStreamPlayer3D = $CountDownAudioStreamPlayer3D
 
-var audios = {
+const AUDIOS = {
     "0": preload("res://sound/0.mp3"),
     "1": preload("res://sound/4.mp3"),
     "2": preload("res://sound/3.mp3"),
@@ -151,7 +151,7 @@ var audios = {
 
 func _on_start_timer_timeout() -> void:
     currentTimerDuration -= 1;
-    countDownAudioStreamPlayer3D.stream = audios[str(currentTimerDuration)]
+    countDownAudioStreamPlayer3D.stream = AUDIOS[str(currentTimerDuration)]
     countDownAudioStreamPlayer3D.play()
     print("Current timer duration: %d" % currentTimerDuration);
     if currentTimerDuration <= 0:
@@ -186,9 +186,19 @@ func _spawn_train() -> void:
 @onready var endGamePeepsDisplayPath: Path3D = $StationSections2/PeepsPath
 
 func _on_game_over_timer_timeout() -> void:
-    hud.hide_counter_labels()
+    # 1. NOW we calculate the scores (Inputs are final)
+    player1Score = _calculate_score(player1Counter, correctAnswer)
+    player2Score = _calculate_score(player2Counter, correctAnswer)
     
-    # Update and show score display
+    # 2. Add to totals
+    player1TotalScore += player1Score
+    player2TotalScore += player2Score
+
+    print("Final P1 Guess: %d | Score: %d" % [player1Counter, player1Score])
+    print("Final P2 Guess: %d | Score: %d" % [player2Counter, player2Score])
+
+    # 3. Update UI
+    hud.hide_counter_labels()
     hud.update_score_label(player1Counter, player2Counter, correctAnswer, player1Score, player2Score, player1TotalScore, player2TotalScore)
     hud.show_score_label()
     
@@ -296,25 +306,37 @@ func _count_total_peeps() -> int:
     return total_peeps
 
 func _calculate_score(guess: int, actual: int) -> int:
+    print("\n--- SCORE DEBUG ---")
+    print("Guess: %d | Actual: %d" % [guess, actual])
+    
+    # 1. Handle Zero Case
     if actual == 0:
-        # If no peeps, perfect guess is 0
-        return perfect_score if guess == 0 else worst_score
+        var result = perfect_score if guess == 0 else worst_score
+        print("Actual is 0. Result: %d" % result)
+        return result
     
-    # Calculate the difference
-    var difference = abs(guess - actual)
+    # 2. Calculate Difference
+    var difference = abs(float(guess - actual))
+    print("Difference: %f" % difference)
     
-    # Calculate percentage error (how far off as a percentage of actual)
-    var percentage_error = float(difference) / float(actual)
+    # 3. Calculate Percentage Error (e.g. 0.1 for 10%)
+    var percentage_error = difference / float(actual)
+    print("Error %%: %f" % percentage_error)
     
-    # Clamp percentage error to 0-1 range (100% error = worst case)
-    percentage_error = clamp(percentage_error, min_percentage_error, max_percentage_error)
+    # 4. Calculate Penalty (Error * Multiplier)
+    # With multiplier 50.0: 10% error = 5 points penalty
+    var penalty = percentage_error * score_error_multiplier
+    print("Penalty to subtract: %f" % penalty)
     
-    # Interpolate score: perfect_score for perfect (0% error), worst_score for worst (100% error)
-    # Score = perfect_score - (percentage_error * score_error_multiplier)
-    var score = float(perfect_score) - (percentage_error * score_error_multiplier)
+    # 5. Final Score
+    var raw_score = float(perfect_score) - penalty
+    print("Raw Score (100 - Penalty): %f" % raw_score)
     
-    # Round to nearest integer and clamp to worst_score-perfect_score
-    return clampi(int(round(score)), worst_score, perfect_score)
+    var final_score = clampi(int(round(raw_score)), worst_score, perfect_score)
+    print("Final Clamped Score: %d" % final_score)
+    print("-------------------\n")
+    
+    return final_score
 
 func _check_last_wagon_crossed_line() -> void:
     # Only check if we have cars and haven't emitted signal yet
@@ -345,25 +367,13 @@ func _check_last_wagon_crossed_line() -> void:
 
 
 func _on_last_wagon_crossed_line() -> void:
-    # Count total peeps in the train
+    # 1. Count the actual passengers (Correct Answer)
     correctAnswer = _count_total_peeps()
-    print("Correct answer (total peeps): %d" % correctAnswer)
+    print("Train left. Correct answer is: %d. Waiting for player final inputs..." % correctAnswer)
     
-    # Calculate round scores based on accuracy
-    var roundScore1 = _calculate_score(player1Counter, correctAnswer)
-    var roundScore2 = _calculate_score(player2Counter, correctAnswer)
+    # 2. DO NOT calculate score here. The players are still guessing!
     
-    # Add round scores to cumulative totals
-    player1TotalScore += roundScore1
-    player2TotalScore += roundScore2
-    
-    # Store round scores for display
-    player1Score = roundScore1
-    player2Score = roundScore2
-    
-    print("Player 1 guess: %d, round score: %d, total score: %d" % [player1Counter, player1Score, player1TotalScore])
-    print("Player 2 guess: %d, round score: %d, total score: %d" % [player2Counter, player2Score, player2TotalScore])
-    
+    # 3. Start the countdown to the results screen
     gameOverTimer.start()
 
 
@@ -412,6 +422,6 @@ func _start_new_round() -> void:
         push_error("RESET animation not found")
     
     # Start countdown timer
-    countDownAudioStreamPlayer3D.stream = audios[str(timerDuration)]
+    countDownAudioStreamPlayer3D.stream = AUDIOS[str(timerDuration)]
     countDownAudioStreamPlayer3D.play()
     startTimer.start()

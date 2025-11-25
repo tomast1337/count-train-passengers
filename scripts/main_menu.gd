@@ -1,20 +1,20 @@
 extends Node3D
 
-@onready var spawnTimer: Timer = $SpawnTimer
-@onready var carSpawnPoint: Node3D = $CarSpawnPoint
+@onready var spawnTimer: Timer = $SpawnTimer # The timer to spawn the subway cars
+@onready var carSpawnPoint: Node3D = $CarSpawnPoint # The point where the subway cars will spawn
 
-@export var subwayCar: PackedScene;
+@export var subwayCar: PackedScene; # The subway car scene to spawn
 
-@export var maxSubwayCarsLength: int = 8;
-@export var minSubwayCarsLength: int = 3;
+@export var maxSubwayCarsLength: int = 8; # Maximum length of the subway cars
+@export var minSubwayCarsLength: int = 3; # Minimum length of the subway cars
 
-@export var minSubwayCarSpeed: float = 2.0;
-@export var maxSubwayCarSpeed: float = 16.0;
+@export var minSubwayCarSpeed: float = 2.0; # Minimum speed of the subway cars
+@export var maxSubwayCarSpeed: float = 16.0; # Maximum speed of the subway cars
 
-@export var subwayCarSpacing: float = 24.0;
+@export var subwayCarSpacing: float = 24.0; # Distance between subway cars
 @export var offScreenThreshold: float = -50.0;  # Z position where train is considered off screen
 
-var subwayCars: Array[Node3D] = [];
+var subwayCars: Array[Node3D] = []; # Track the subway cars in the current train
 var currentTrain: Node3D = null;  # Track the currently spawned train
 var waitingForTrainToLeave: bool = false;  # Flag to know when to check if train is off screen
 

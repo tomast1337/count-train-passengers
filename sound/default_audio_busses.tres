@@ -8,6 +8,6 @@ spread = 0.92
 dry = 0.47
 
 [resource]
-bus/0/volume_db = -6.91795
+bus/0/volume_db = -14.062227
 bus/0/effect/0/effect = SubResource("AudioEffectReverb_4fyd4")
 bus/0/effect/0/enabled = true

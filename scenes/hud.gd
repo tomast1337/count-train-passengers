@@ -1,15 +1,15 @@
 extends Control
 
-const SCORE_TEMPLATE: String = """[b]Round Result:[/b]
+const SCORE_TEMPLATE: String = """Round Result:
 Player 1 Guess: {Player1Guess} → {Player1RoundScore} Points
 Player 2 Guess: {Player2Guess} → {Player2RoundScore} Points
 
-[b]Correct Answer:[/b] 
+Correct Answer:
 {CorrectAnswer}
 
 --------------------------------
 
-[b]Game Score (Total):[/b]
+Game Score (Total):
 Player 1: {Player1TotalScore} Points
 Player 2: {Player2TotalScore} Points
 """
